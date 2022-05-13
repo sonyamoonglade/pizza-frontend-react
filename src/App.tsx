@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import {useAppDispatch} from "./redux/hooks/AppDispatch";
+import {useAppSelector} from "./redux/hooks/AppSelector";
+import {getCatalogProducts} from "./redux/product/product.async-actions";
+import {useAxios} from "./hooks/useAxios";
+import Layout from "./components/layout/layout/Layout";
+import Catalog from "./components/catalog/catalog/Catalog";
+import AppForm from "./components/appForm/AppForm";
+import {productSelector} from "./redux/product/products.selectors";
+import ProductPresentation from "./components/catalog/productPresentation/ProductPresentation";
+
+
 
 function App() {
+
+  const dispatch = useAppDispatch()
+  const {client} = useAxios()
+  const {productList,isPresentingNow} = useAppSelector(productSelector)
+
+  //@ts-ignore
+  useEffect(() => {
+    dispatch(getCatalogProducts(client))
+
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout >
+
+      {productList.length !== 0 &&
+          <Catalog productList={productList} />
+      }
+
+      <AppForm />
+      <ProductPresentation />
+    </Layout>
   );
 }
 

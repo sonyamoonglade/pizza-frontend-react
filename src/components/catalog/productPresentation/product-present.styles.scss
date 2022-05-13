@@ -1,0 +1,19 @@
+.product_presentation{
+  position: fixed;
+  padding: 2rem 1rem 1rem;
+  height: 80vh;
+  bottom: -5%;
+  background-color: white;
+  z-index: 900;
+  width: 100%;
+  transition: all 0.5s ease-in-out;
+}
+
+.product_presentation.hidden{
+  height: 0;
+  overflow: hidden;
+}
+
+.miscellaneous{
+  margin-top: 1rem;
+}

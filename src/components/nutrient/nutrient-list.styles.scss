@@ -1,0 +1,21 @@
+@import "src/./variables.scss";
+
+
+.nutrients_list{
+  list-style: none;
+  color: $black-50;
+  font-weight: 400;
+  text-shadow: 0 1px 5px $black-18;
+  padding: 0;
+}
+
+.nutrient{
+  margin-bottom: 0.125rem;
+}
+.energy_value{
+  margin-top: 0.5rem;
+}
+.energy_value:before{
+  content: 'Энергетическая ценность:';
+  margin-bottom: 0.1rem;
+}

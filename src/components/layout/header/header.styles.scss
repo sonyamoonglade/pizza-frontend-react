@@ -1,0 +1,42 @@
+@import "src/./variables.scss";
+
+
+
+header {
+  height: 40vh;
+  display: block;
+
+  @media (min-height: 670px) {
+    height: 35vh;
+  }
+  @media (min-height: 730px) {
+    height: 30vh;
+  }
+  @media(min-height: 850px) {
+    height: 28vh;
+  }
+}
+
+.header_top{
+  position: fixed;
+  padding: 1rem;
+  height: fit-content;
+  display: flex;
+  z-index: 120;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  p{
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+
+}
+
+.menu_close_icon{
+  transform: translateX(-3px);
+}
+
