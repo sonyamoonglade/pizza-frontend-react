@@ -21,6 +21,7 @@ p{
 
 *{
   box-sizing: border-box;
+  font-family: 'Roboto', 'sans-serif';
 }
 
 .app_form{
@@ -38,3 +39,8 @@ p{
   top: 0;
   opacity: 1;
 }
+
+button{
+  padding: 0;
+}
+

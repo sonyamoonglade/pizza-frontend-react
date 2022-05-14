@@ -4,23 +4,23 @@ import {CgMenuGridO} from 'react-icons/cg'
 import {GrClose} from 'react-icons/gr'
 import PromotionList from "../promotion/PromotionList";
 import {Promotion} from "../../../common/types";
-import {useAppSelector} from "../../../redux/hooks/AppSelector";
-import {menuState} from "../../../redux/window/window.selectors";
-import {useAppDispatch} from "../../../redux/hooks/AppDispatch";
-import {windowSlice} from "../../../redux/window/window.slice";
+
+
 import './header.styles.scss'
+import {menuState, useAppDispatch, useAppSelector, windowSlice} from "../../../redux";
+
 
 const mockPromotions:Promotion[] = [
     {
         id:1,
-        title:'Скидка на доставку с понедельника по четверг',
-        touched_text:'На все заказы, оформленные с понедельника по четверг с 11:00 до 16:00.',
-        touched_title: 'я таучед тайтл',
-    },{
-        id:2,
-        title:'Скидка на доставку с понедельника по четверг',
+        title:'Скидка 10% на доставку с понедельника по четверг',
         touched_text:'На все заказы, оформленные с понедельника по четверг с 11:00 до 16:00.',
         touched_title: 'Скидка 10% на доставку',
+    },{
+        id:2,
+        title:'Акция!  2 пиццы по цене 3!',
+        touched_text:'Акция действует с 25 мая по 31 июля. Успей получить халяву!',
+        touched_title: 'Две по цене трех',
     }
 ]
 const windowActions = windowSlice.actions
@@ -36,7 +36,7 @@ const Header:FC = () => {
             const currentScroll = window.scrollY
             const perStep = currentScroll / steps
 
-            if(window.scrollY == 0) {
+            if(window.scrollY === 0) {
                 clearInterval(interval)
             }
             window.scroll({top:currentScroll - perStep})

@@ -26,9 +26,9 @@
 }
 
 .name{
-  margin-bottom: 0.3rem;
+  //margin-bottom: 0.3rem;
   font-weight: 600;
-  font-size: $font-lg;
+  font-size: $font-mder;
 }
 
 .title{
@@ -41,8 +41,8 @@
 
 
 .leading{
-  flex-shrink: 0;
   height: fit-content;
+
   span{
     display: block;
     small{

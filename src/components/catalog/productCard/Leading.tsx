@@ -1,8 +1,8 @@
-import React, {FC, useContext} from 'react';
+import React, {FC} from 'react';
 import {AiOutlinePlus} from 'react-icons/ai'
 import {Product} from "../../../common/types";
-import {useAppDispatch} from "../../../redux/hooks/AppDispatch";
-import {productSlice} from "../../../redux/product/product.slice";
+
+import {productSlice,useAppDispatch} from "../../../redux";
 import {currency} from "../../../common/constans";
 
 interface leadingProps {
@@ -26,7 +26,7 @@ const Leading:FC<leadingProps> = ({product}) => {
                     <span>
                         <p className="name">
                             {name}
-                            <small>/</small>
+                            <small> /</small>
                         </p>
                         <p className="translate">
                             {translate}

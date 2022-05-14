@@ -19,7 +19,7 @@ const PromotionCard:FC<promotionCardProps> = ({promotion, touchFn, isTouched}) =
 
             <div className={!isTouched ? 'promotion_title_primary closed': 'promotion_title_primary'}>
                 <p>{promotion.touched_title}</p>
-                <p className='special_description_touched'>{promotion.touched_text}</p>
+                <p className='promotion_description_touched'>{promotion.touched_text}</p>
             </div>
 
 

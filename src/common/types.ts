@@ -31,16 +31,17 @@ export interface nutrients{
   proteins: number
 }
 
-export interface LocalStorageCartProduct extends Product {
-
-  quantity: number
-  sorting_anchor: string
-
+export type LocalStorageCartProduct = {
+  id: number
+  translate: string
+  price: number
 }
 
 export type DatabaseCartProduct = {
   id: number
   quantity: number
+  translate: string
+  price: number
 }
 
 export interface Product {
@@ -60,3 +61,10 @@ export interface Promotion {
   touched_title: string
   touched_text: string
 }
+
+export enum CategoryColor {
+  'Напитки' = '#6fbecf',
+  'Пицца'  = '#eb5757',
+  'Закуски' = '#3cb46e'
+}
+

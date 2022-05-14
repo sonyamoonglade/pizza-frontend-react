@@ -17,7 +17,7 @@ const Trailing:FC<trailingProps> = ({description,nutrients,energy_value}) => {
             </p>
             {
                 nutrients !== undefined &&
-                <NutrientList nutrients={nutrients}>
+                <NutrientList isPresentingNow={false} nutrients={nutrients}>
                     {energy_value !== undefined &&
                         <li className='energy_value'><p>{energy_value}ккал на 100г.</p></li>
                     }
