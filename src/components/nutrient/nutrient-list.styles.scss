@@ -7,6 +7,11 @@
   font-weight: 400;
   text-shadow: 0 1px 5px $black-18;
   padding: 0;
+
+  @media (max-height: 650px) {
+    font-size: $font-smer !important;
+  }
+
 }
 .nutrients_list.presentation{
   color: $black-50;

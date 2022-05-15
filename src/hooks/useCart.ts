@@ -1,6 +1,7 @@
-import {DatabaseCartProduct} from "../common/types";
+import {CartInterface, DatabaseCartProduct} from "../common/types";
 
 const CART_KEY = 'cart'
+
 export function useCart(){
 
     function toJSON(i: any){
@@ -28,11 +29,25 @@ export function useCart(){
 
         }
         updateCart(newCart)
+        return
     }
 
     const removeProduct = (id: number) => {
         const actualCart = getCart()
-        const newCart = actualCart.filter((p) => p.id !== id)
+        const p = actualCart.find(p => p.id === id)
+        let newCart
+        if(p.quantity === 1){
+            newCart = actualCart.filter((p) => p.id !== id)
+        }else {
+            newCart = actualCart.map(p => {
+                if(p.id === id){
+                    p.quantity -= 1
+                    return p
+                }
+
+                return p
+            })
+        }
         updateCart(newCart)
     }
 
@@ -41,8 +56,8 @@ export function useCart(){
         return cart !== null ? cart : []
     }
 
-    const updateCart = (cart:DatabaseCartProduct[]) => {
-        localStorage.setItem(CART_KEY,toJSON(cart))
+    const updateCart = (prev:DatabaseCartProduct[]) => {
+        localStorage.setItem(CART_KEY,toJSON(prev))
         return
     }
 
@@ -63,7 +78,21 @@ export function useCart(){
 
     }
 
-    return {addProduct,removeProduct,getCart,clearCart,calculateCartTotalPrice}
+    const getById = (id: number) => {
+        const actualCart = getCart()
+        return actualCart.find(p => p.id === id)
+    }
+
+    const cart:CartInterface = {
+        addProduct,
+        removeProduct,
+        getCart,
+        clearCart,
+        calculateCartTotalPrice,
+        getById
+    }
+
+    return cart
 
 }
 

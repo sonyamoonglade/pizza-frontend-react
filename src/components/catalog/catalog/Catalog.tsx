@@ -10,12 +10,11 @@ interface catalogProps {
 
 const Catalog:FC<catalogProps> = ({productList}) => {
 
-    console.log(productList)
 
     return (
         <ul className='catalog'>
-            {productList.map((product) => (
-                <ProductCard product={product} />
+            {productList.map((p) => (
+                <ProductCard product={p} key={p.id} />
             ))}
         </ul>
     );

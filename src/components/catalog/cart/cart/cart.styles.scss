@@ -1,0 +1,31 @@
+@import "src/./variables.scss";
+
+.cart.modal{
+  top: 0 !important;
+  z-index: 140 !important;
+}
+
+.cart_header{
+  display: flex;
+  align-items: center;
+  height: 7vh;
+  justify-content: space-between;
+  border-bottom: 1px solid $santa-grey;
+
+  p{
+    font-size: $font-lg;
+    font-weight: 500;
+    margin-right: 39%;
+
+  }
+}
+
+.cart_back_icon{
+  margin-left: 16px;
+}
+
+.cart_list{
+  padding: 0;
+  padding-left: 1rem;
+  padding-right: 1.5rem;
+}

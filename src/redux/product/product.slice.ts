@@ -6,16 +6,21 @@ interface ProductState {
     isProductListLoading: boolean
     onLoadErrorMessage: string | null
     presentedProduct: Product | null
+    presentedProductCartQuantity: number
+    totalCartPrice: number
     isPresentingNow: boolean
+    isCartEmpty: boolean
 }
 
 const initialState:ProductState = {
-
     productList: [],
-    isProductListLoading: false,
-    presentedProduct: null,
     onLoadErrorMessage: null,
-    isPresentingNow: false
+    presentedProduct: null,
+    isProductListLoading: false,
+    isPresentingNow: false,
+    presentedProductCartQuantity: 0,
+    totalCartPrice: 0,
+    isCartEmpty: true
 }
 
 
@@ -27,31 +32,34 @@ export const productSlice = createSlice({
         listLoading:(s) => {
             s.isProductListLoading = true
         },
-
         saveList:(s,a:PayloadAction<Product[]>) => {
-
             s.productList = a.payload
-            // s.isProductListLoading = false
+            s.isProductListLoading = false
         },
-
         setErrorMessage:(s,a:PayloadAction<string>) => {
             console.log(a)
             s.onLoadErrorMessage = a.payload
         },
-
         startPresentation:(s,a:PayloadAction<Product>) => {
             s.isPresentingNow = true
             s.presentedProduct = a.payload
         },
         stopPresentation:(s) => {
             s.isPresentingNow = false
-        }
-
-
+        },
+        setPresentedProductQuantity: (s, a:PayloadAction<number>) => {
+            s.presentedProductCartQuantity = a.payload
+        },
+        setTotalCartPrice: (s,a:PayloadAction<number>) => {
+            s.totalCartPrice = a.payload
+        },
+        setCartFilling: (s,a:PayloadAction<boolean>) => {
+            s.isCartEmpty = a.payload
+        },
 
 
 
     }
 })
-
+export const productActions = productSlice.actions
 export default productSlice.reducer

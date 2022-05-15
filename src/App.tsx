@@ -6,29 +6,52 @@ import Catalog from "./components/catalog/catalog/Catalog";
 import AppForm from "./components/appForm/AppForm";
 
 import ProductPresentation from "./components/catalog/productPresentation/ProductPresentation";
-import {getCatalogProducts, productSelector, useAppDispatch, useAppSelector} from "./redux";
+import {
+  getCatalogProducts,
+  productActions,
+  productSelector,
+  useAppDispatch,
+  useAppSelector,
+  windowSelector
+} from "./redux";
+import {useCart} from "./hooks/useCart";
+import CartLink from "./components/catalog/cart/cartLink/CartLink";
 
 
 
 function App() {
 
-  const dispatch = useAppDispatch()
   const {client} = useAxios()
-  const {productList} = useAppSelector(productSelector)
 
-  //@ts-ignore
+
+  const dispatch = useAppDispatch()
+  const {productList} = useAppSelector(productSelector)
+  const {menu,cart} = useAppSelector(windowSelector)
+
   useEffect(() => {
     dispatch(getCatalogProducts(client))
-
   },[])
+  useEffect(() => {
+    const body = document.querySelector('body')
+    console.log(cart)
+    if(menu || cart){
+      body.style.overflow = 'hidden'
+    }
+    else {
+      body.style.overflow = 'visible'
+    }
+
+  },[menu,cart])
+
 
   return (
     <Layout >
 
-      {productList.length !== 0 &&
-          <Catalog productList={productList} />
+      {
+        productList.length !== 0 &&
+        <Catalog productList={productList} />
       }
-
+      <CartLink />
       <AppForm />
       <ProductPresentation />
     </Layout>

@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
 import {Product} from "../../../common/types";
-import Leading from "./Leading";
-import Trailing from "./Trailing";
+
 import './product-card.styles.scss'
+import ProductHeading from "./ProductHeading";
+import ProductInfo from "./ProductInfo";
 
 interface productCardProps {
     product: Product
@@ -12,13 +13,13 @@ interface productCardProps {
 const ProductCard:FC<productCardProps> = ({product}) => {
     return (
         <li className='product_card'>
-            <Leading
-               product={product}
+            <ProductHeading
+               name={product.name}
+               translate={product.translate}
+               price={product.price}
             />
-            <Trailing
-                description={product.description}
-                nutrients={product.features?.nutrients}
-                energy_value={product.features?.energy_value}
+            <ProductInfo
+               product={product}
             />
         </li>
     );

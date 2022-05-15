@@ -44,3 +44,31 @@ button{
   padding: 0;
 }
 
+
+.hidden{
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+
+.modal--visible {
+  right: 0 !important
+}
+
+.menu_close_icon{
+  transform: translateX(-3px);
+}
+
+.modal{
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  top: 5vh;
+  transition: all .4s ease;
+  position: fixed;
+  background-color: white;
+  right: -100%;
+  overflow: hidden;
+}
+

@@ -7,9 +7,11 @@ interface promotionListProps {
     promotions: Promotion[]
 }
 
+type promMap = Map<number, boolean>
+
 const PromotionList:FC<promotionListProps> = ({promotions}) => {
 
-    const [touchedPromotions,setTouchedPromotions] = useState<Map<number,boolean>>(makeState())
+    const [touchedPromotions,setTouchedPromotions] = useState<promMap>(makeState())
 
     function makeState(){
         const m = new Map<number,boolean>()
@@ -32,7 +34,7 @@ const PromotionList:FC<promotionListProps> = ({promotions}) => {
                 {promotions.map((p) => {
                     const isTouched = touchedPromotions.get(p.id)
                     return (
-                        <PromotionCard promotion={p} touchFn={touch} isTouched={isTouched}/>
+                        <PromotionCard promotion={p} key={p.id} touchFn={touch} isTouched={isTouched}/>
                     )
                 })}
             </ul>

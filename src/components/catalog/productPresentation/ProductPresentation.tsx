@@ -1,44 +1,81 @@
-import React, {useEffect, useRef, useState} from 'react';
-import { productSelector, useAppSelector} from "../../../redux";
+import React,{ useEffect, useMemo, useState} from 'react';
+import {productActions, productSelector, useAppDispatch, useAppSelector, windowActions} from "../../../redux";
 import NutrientList from "../../nutrient/NutrientList";
 import '../productCard/product-card.styles.scss'
 import './product-present.styles.scss'
 import {DatabaseCartProduct, Product} from "../../../common/types";
-import {BiShoppingBag} from 'react-icons/bi'
 import {useCart} from "../../../hooks/useCart";
+import '../../layout/layout/layout.styles.scss'
+import AddToCartOnPresentation from "../cart/addToCartButton/AddToCartOnPresentation";
 
 const currency = '₽'
+const baseUrl = `http://localhost:5000/images`
+
 const ProductPresentation = () => {
+
+    const {
+        presentedProduct,
+        isPresentingNow,
+        presentedProductCartQuantity,
+        totalCartPrice
+    } = useAppSelector(productSelector)
+    const dispatch = useAppDispatch()
 
     const cart = useCart()
 
+    const [isNotified, setIsNotified] = useState<boolean>(false)
+    const [isProductInCart, setIsProductInCart] = useState<DatabaseCartProduct>(null)
+    const [isLongName, setIsLongName] = useState<boolean>(false)
+    const [longName, setLongName] = useState<string>('')
 
-
-    const {presentedProduct,isPresentingNow} = useAppSelector(productSelector)
-    const baseUrl = `http://localhost:5000/images`
+    const startingQuantity = useMemo(() => {
+        if(presentedProduct){
+            const cartP = cart.getById(presentedProduct.id)
+            if(!cartP) return 0
+            return cartP.quantity
+        }
+        return 0
+    },[isPresentingNow])
+    const productImage = useMemo(() => {
+        if(presentedProduct) return `${baseUrl}/${presentedProduct.id}.jpg`
+        return ""
+    },[presentedProduct])
+    const filling = useMemo(() => {
+        const c = cart.getCart()
+        const onCondition = !(c.length > 0)
+        return onCondition
+    },[isProductInCart])
 
 
     useEffect(() => {
         const body = document.querySelector('body')
+        dispatch(productActions.setTotalCartPrice(cart.calculateCartTotalPrice()))
 
         if(isPresentingNow){
             body!.style.overflow = 'hidden'
         }
+
         return () => {
             body!.style.overflow = 'visible'
         }
     }, [isPresentingNow])
     useEffect(() => {
-        if(presentedProduct !== null) splitLongName()
-    },[presentedProduct])
+        if(presentedProduct !== null) {
+            splitLongName()
+            checkIsInCart(presentedProduct.id)
+        }
 
-    const transitionRef = useRef(null)
-    const defaultCartPrice = useRef(cart.calculateCartTotalPrice())
-
-
-    const [isLongName, setIsLongName] = useState<boolean>(false)
-    const [longName, setLongName] = useState<string>('')
-    const [totalCartPrice, setTotalCartPrice] = useState<number>(defaultCartPrice.current)
+    },[isPresentingNow,totalCartPrice])
+    useEffect(() => {
+        if(startingQuantity < presentedProductCartQuantity){
+            setIsNotified(true)
+        }else {
+            setIsNotified(false)
+        }
+    },[presentedProductCartQuantity,totalCartPrice])
+    useEffect(() => {
+        dispatch(productActions.setCartFilling(filling))
+    },[filling])
 
     function splitLongName(){
         const {name} = presentedProduct
@@ -53,6 +90,7 @@ const ProductPresentation = () => {
     }
 
     function addToCart(product:Product){
+        if(isProductInCart) return
         const cartProduct:DatabaseCartProduct = {
             id: product.id,
             quantity: 1,
@@ -60,16 +98,21 @@ const ProductPresentation = () => {
             price: product.price
         }
         cart.addProduct(cartProduct)
-
-        setTotalCartPrice(cart.calculateCartTotalPrice())
+        const totalCartPrice = cart.calculateCartTotalPrice()
+        dispatch(productActions.setTotalCartPrice(totalCartPrice))
     }
 
-
-
+    function checkIsInCart(id: number){
+        const product = cart.getById(id)
+        if(!product) return setIsProductInCart(null)
+        dispatch(productActions.setPresentedProductQuantity(product.quantity))
+        return setIsProductInCart(product)
+    }
 
     return (
-        <div ref={transitionRef} className={ isPresentingNow ? 'product_presentation' : 'product_presentation hidden'}>
-            {presentedProduct !== null &&
+        <div className={ isPresentingNow ? 'product_presentation' : 'product_presentation hidden'}>
+            {
+                presentedProduct !== null &&
                 <>
                     <div className='title presentation'>
                     <span>
@@ -78,25 +121,24 @@ const ProductPresentation = () => {
                     </span>
                         <p className='price'>{presentedProduct.price} {currency}</p>
                     </div>
-                    <img className='image' src={`${baseUrl}/${presentedProduct.id}.jpg`} alt=""/>
+                    <img className='image' src={productImage} alt="Изображение"/>
                     <div className='miscellaneous'>
-                        <p className='description'>{presentedProduct.description}</p>
-                        {presentedProduct.features.nutrients &&
-                            <NutrientList isPresentingNow={isPresentingNow} nutrients={presentedProduct.features.nutrients}/>
-                        }
-                    </div>
-                    <div className='cart_btn_container' >
-                        <button onClick={() => addToCart(presentedProduct)} className='add_to_cart_btn'>
-
-                            <div className='cart_icon_container'>
-                                <BiShoppingBag size={25} className='add_to_cart_icon' />
-                            </div>
-                            Добавить в корзину
-
-                            <p className='total_cart_price'>
-                                {totalCartPrice} {currency}
-                            </p>
-                        </button>
+                        <div>
+                            <p className='description'>{presentedProduct.description}</p>
+                            {
+                                presentedProduct.features.nutrients &&
+                                <NutrientList
+                                    isPresentingNow={isPresentingNow}
+                                    nutrients={presentedProduct.features.nutrients}
+                                />
+                            }
+                        </div>
+                        <AddToCartOnPresentation
+                            isProductInCart={isProductInCart}
+                            cart={cart}
+                            addToCart={addToCart}
+                            isNotified={isNotified}
+                        />
                     </div>
                 </>
             }

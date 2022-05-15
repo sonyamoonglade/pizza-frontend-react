@@ -4,10 +4,14 @@ import {CgMenuGridO} from 'react-icons/cg'
 import {GrClose} from 'react-icons/gr'
 import PromotionList from "../promotion/PromotionList";
 import {Promotion} from "../../../common/types";
+import '../layout/layout.styles.scss'
 
 
 import './header.styles.scss'
-import {menuState, useAppDispatch, useAppSelector, windowSlice} from "../../../redux";
+import {useAppDispatch, useAppSelector, windowSelector, windowSlice} from "../../../redux";
+import Navigation from "../navigation/mobile/Navigation";
+import OpenCloseButton from "../openCloseButton/OpenCloseButton";
+import Cart from "../../catalog/cart/cart/Cart";
 
 
 const mockPromotions:Promotion[] = [
@@ -45,7 +49,7 @@ const Header:FC = () => {
 
     }
 
-    const menuOpened = useAppSelector(menuState)
+    const {menu} = useAppSelector(windowSelector)
     const dispatch = useAppDispatch()
 
     function toggleMenu(){
@@ -56,12 +60,13 @@ const Header:FC = () => {
         <header>
             <div className='header_top'>
                 <p onClick={nullifyScroll}>Пицца-Тупицца</p>
-                {menuOpened ?
-                    <GrClose onClick={toggleMenu} size={20} className='menu_close_icon' /> :
-                    <CgMenuGridO onClick={toggleMenu} size={25} />
-                }
+                <OpenCloseButton modalState={menu} toggleModalFn={toggleMenu} />
             </div>
             <PromotionList promotions={mockPromotions} />
+
+            <Cart />
+            <Navigation />
+
         </header>
     );
 };

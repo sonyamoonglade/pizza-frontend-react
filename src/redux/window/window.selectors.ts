@@ -1,3 +1,3 @@
 import {RootState} from "../store";
 
-export const menuState = (state:RootState) => state.windowReducer.menu
+export const windowSelector = (state:RootState) => state.windowReducer

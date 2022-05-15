@@ -68,3 +68,15 @@ export enum CategoryColor {
   'Закуски' = '#3cb46e'
 }
 
+
+export interface CartInterface {
+
+  addProduct(product: DatabaseCartProduct): void
+  removeProduct(id: number): void
+  getById(id: number): DatabaseCartProduct | undefined
+  getCart(): DatabaseCartProduct[]
+  clearCart(): void
+  calculateCartTotalPrice(): number
+
+
+}
