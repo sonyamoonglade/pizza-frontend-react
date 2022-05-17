@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {AiOutlineMinus,AiOutlinePlus} from "react-icons/ai";
 import './cart-button.styles.scss'
-import {productSelector, productSlice, useAppDispatch, useAppSelector} from "../../../../redux";
-import {CartInterface, DatabaseCartProduct} from "../../../../common/types";
+import {productSelector, productSlice, useAppDispatch, useAppSelector} from "../../../redux";
+import {CartInterface, DatabaseCartProduct} from "../../../common/types";
 
 
 

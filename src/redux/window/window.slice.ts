@@ -1,16 +1,17 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {inflate} from "zlib";
 
 
 interface WindowState {
     menu: boolean
     cart: boolean
-    cartLink: boolean
+    userOrder: boolean
 }
 
 const initialState:WindowState = {
     menu: false,
     cart: false,
-    cartLink: false
+    userOrder: false
 }
 
 
@@ -27,8 +28,15 @@ export const windowSlice = createSlice({
             s.cart = !s.cart
         },
 
-        toggleCartLink: (s, a:Required<PayloadAction<boolean>>) =>{
-            s.cartLink = a.payload
+
+        toggleUserOrder: (s) => {
+            s.userOrder = !s.userOrder
+        },
+
+        closeAll:(s) =>{
+            s.cart = false
+            s.menu = false
+            s.userOrder = false
         }
 
     }

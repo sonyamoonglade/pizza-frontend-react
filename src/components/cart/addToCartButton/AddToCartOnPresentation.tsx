@@ -1,9 +1,10 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import {BiShoppingBag} from "react-icons/bi";
 import CartButton from "../cartButton/CartButton";
-import {CartInterface, DatabaseCartProduct} from "../../../../common/types";
-import {currency} from "../../../../common/constans";
-import {productSelector, useAppSelector} from "../../../../redux";
+import {productActions, productSelector, useAppDispatch, useAppSelector, windowActions} from "../../../redux";
+import {CartInterface, DatabaseCartProduct} from "../../../common/types";
+import {currency} from "../../../common/constans";
+
 
 interface addToCartOnPresentationProps {
     addToCart: any
@@ -21,15 +22,37 @@ const AddToCartOnPresentation:FC<addToCartOnPresentationProps> = (props) => {
     } = props
 
     const {totalCartPrice,presentedProductCartQuantity,presentedProduct} = useAppSelector(productSelector)
+    const dispatch = useAppDispatch()
+
+    const jumpAnimationRef = useRef<HTMLDivElement>(null)
+
+    function openCart(){
+        dispatch(productActions.stopPresentation())
+        dispatch(windowActions.toggleCart())
+    }
+
+    useEffect(() =>{
+        jumpAnimationRef.current.animate([
+            {transform:'translateY(0)'},
+            {transform:'translateY(-1px)'},
+            {transform:'translateY(0px)'},
+        ],{
+            duration: 300,
+            iterations: 1,
+            easing: 'ease-in-out'
+        })
+    },[presentedProductCartQuantity])
 
     return (
         <div onClick={() => addToCart(presentedProduct)} className='add_to_cart_btn'>
-            <div className='cart_icon_container'>
+            <div className='cart_icon_container' ref={jumpAnimationRef}>
                 {
                     isNotified &&
                     <div className='notification_dot'>&nbsp;</div>
                 }
-                <BiShoppingBag size={25} className='add_to_cart_icon' />
+                <span >
+                    <BiShoppingBag onClick={() => openCart()} size={25} className='add_to_cart_icon' />
+                </span>
             </div>
             {
                 isProductInCart ?

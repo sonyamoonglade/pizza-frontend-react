@@ -5,11 +5,13 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid $black-18;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.7rem;
   align-items: center;
 }
-
+.cart_item:last-of-type{
+  margin-bottom: 0;
+}
 
 .cart_item_image{
   margin-right: 15px;
@@ -25,14 +27,15 @@
   padding: 0.2rem;
 }
 .cart_item_translate{
-  font-size: $font-regular;
-  font-weight: 500;
+  font-size: $font-mder;
+  font-family: "Geometria Medium", serif;
+  line-height: 15px;
   margin-bottom: 5px;
 }
 
 .cart_item_price{
-  font-weight: 500;
-  font-size: $font-lg;
+  font-family: "Geometria Medium", serif;
+  font-size: $font-mder;
 }
 
 .cart_item_quantity{

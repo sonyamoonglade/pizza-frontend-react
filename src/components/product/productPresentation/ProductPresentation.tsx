@@ -1,18 +1,18 @@
 import React,{ useEffect, useMemo, useState} from 'react';
-import {productActions, productSelector, useAppDispatch, useAppSelector, windowActions} from "../../../redux";
+import {productActions, productSelector, useAppDispatch, useAppSelector} from "../../../redux";
 import NutrientList from "../../nutrient/NutrientList";
 import '../productCard/product-card.styles.scss'
 import './product-present.styles.scss'
 import {DatabaseCartProduct, Product} from "../../../common/types";
 import {useCart} from "../../../hooks/useCart";
 import '../../layout/layout/layout.styles.scss'
-import AddToCartOnPresentation from "../cart/addToCartButton/AddToCartOnPresentation";
+import AddToCartOnPresentation from "../../cart/addToCartButton/AddToCartOnPresentation";
 
 const currency = '₽'
-const baseUrl = `http://localhost:5000/images`
+export const baseUrl = `http://localhost:5000/images`
 
 const ProductPresentation = () => {
-
+    // todo: fix notification
     const {
         presentedProduct,
         isPresentingNow,

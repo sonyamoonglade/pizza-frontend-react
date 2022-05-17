@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
-import ProductCard from "../productCard/ProductCard";
-import {Product} from "../../../common/types";
+
 import './catalog.styles.scss'
+import ProductCard from "../product/productCard/ProductCard";
+import {Product} from "../../common/types";
 
 interface catalogProps {
     productList: Product[]

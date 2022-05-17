@@ -1,8 +1,8 @@
 import React, {FC, useMemo} from 'react';
-import {DatabaseCartProduct} from "../../../../common/types";
 
 import './cart-item.styles.scss'
-import {currency} from "../../../../common/constans";
+import {DatabaseCartProduct} from "../../../common/types";
+import {currency} from "../../../common/constans";
 
 interface cartItemProps {
     product: DatabaseCartProduct

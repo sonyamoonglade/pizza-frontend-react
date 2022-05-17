@@ -11,7 +11,8 @@ import './header.styles.scss'
 import {useAppDispatch, useAppSelector, windowSelector, windowSlice} from "../../../redux";
 import Navigation from "../navigation/mobile/Navigation";
 import OpenCloseButton from "../openCloseButton/OpenCloseButton";
-import Cart from "../../catalog/cart/cart/Cart";
+import Cart from "../../cart/cart/Cart";
+import Order from "../../order/userOrder/Order";
 
 
 const mockPromotions:Promotion[] = [
@@ -63,7 +64,7 @@ const Header:FC = () => {
                 <OpenCloseButton modalState={menu} toggleModalFn={toggleMenu} />
             </div>
             <PromotionList promotions={mockPromotions} />
-
+            <Order />
             <Cart />
             <Navigation />
 

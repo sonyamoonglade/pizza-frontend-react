@@ -1,9 +1,10 @@
 import React from 'react';
 import {BiShoppingBag} from "react-icons/bi";
-import {productSelector, useAppDispatch, useAppSelector, windowActions} from "../../../../redux";
 
 import './cart-link.styles.scss'
-import {currency} from "../../../../common/constans";
+import {productSelector, useAppDispatch, useAppSelector, windowActions} from "../../../redux";
+import {currency} from "../../../common/constans";
+
 
 const CartLink = () => {
 
@@ -17,8 +18,8 @@ const CartLink = () => {
     return (
         <button onClick={() => toggleCart() } className='cart_link'>
 
-            <BiShoppingBag className='cart_icon' size={30} />
-            <span className='cart_title'>Корзина</span>
+            <BiShoppingBag className='cart_link_icon' size={30} />
+            <span className='cart_link_title'>Корзина</span>
             <span className='cart_price link'>{totalCartPrice} {currency}</span>
 
         </button>

@@ -1,0 +1,32 @@
+@import "src/./variables.scss";
+
+
+.make_user_order{
+  z-index: 180 !important;
+  top: 0 !important;
+
+
+}
+
+.user_order_title{
+  font-family: "Geometria Bold";
+  font-size: $font-lg;
+}
+
+.user_order_header{
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $santa-grey;
+  padding-bottom: 1rem;
+}
+
+.user_order_close_icon{
+  margin-right: 1rem;
+  transform: translateY(1px);
+}
+
+.user_order_back_icon{
+  margin-left: 1rem;
+}

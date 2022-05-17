@@ -48,6 +48,10 @@
 
 }
 
+.product_info::-webkit-scrollbar{
+  display: none;
+}
+
 .text_info{
   width: 75%;
   flex-shrink: 0;

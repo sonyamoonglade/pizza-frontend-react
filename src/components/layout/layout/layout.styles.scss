@@ -72,3 +72,21 @@ button{
   overflow: hidden;
 }
 
+@font-face {
+  font-family: "Geometria";
+  src: url("http://localhost:5000/fonts/Geometria.ttf");
+}
+
+@font-face {
+  font-family: "Geometria Bold";
+  src: url("http://localhost:5000/fonts/Geometria-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Geometria Medium";
+  src: url("http://localhost:5000/fonts/Geometria-Medium.ttf");
+}
+@font-face {
+  font-family: "Geometria Light";
+  src: url("http://localhost:5000/fonts/Geometria-Light.ttf");
+}

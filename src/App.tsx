@@ -2,20 +2,19 @@ import React, {useEffect} from 'react';
 
 import {useAxios} from "./hooks/useAxios";
 import Layout from "./components/layout/layout/Layout";
-import Catalog from "./components/catalog/catalog/Catalog";
 import AppForm from "./components/appForm/AppForm";
 
-import ProductPresentation from "./components/catalog/productPresentation/ProductPresentation";
 import {
   getCatalogProducts,
-  productActions,
   productSelector,
   useAppDispatch,
   useAppSelector,
   windowSelector
 } from "./redux";
-import {useCart} from "./hooks/useCart";
-import CartLink from "./components/catalog/cart/cartLink/CartLink";
+import CartLink from "./components/cart/cartLink/CartLink";
+import OrderLink from "./components/order/orderLink/OrderLink";
+import ProductPresentation from "./components/product/productPresentation/ProductPresentation";
+import Catalog from "./components/catalog/Catalog";
 
 
 
@@ -25,7 +24,7 @@ function App() {
 
 
   const dispatch = useAppDispatch()
-  const {productList} = useAppSelector(productSelector)
+  const {productList,isCartEmpty} = useAppSelector(productSelector)
   const {menu,cart} = useAppSelector(windowSelector)
 
   useEffect(() => {
@@ -51,7 +50,8 @@ function App() {
         productList.length !== 0 &&
         <Catalog productList={productList} />
       }
-      <CartLink />
+      {cart && <OrderLink />}
+      {!isCartEmpty && <CartLink />}
       <AppForm />
       <ProductPresentation />
     </Layout>
