@@ -78,5 +78,15 @@ export interface CartInterface {
   clearCart(): void
   calculateCartTotalPrice(): number
 
+}
+
+export interface createUserOrderFormFields {
+
+  phone_number: string
+  is_delivered: boolean
+  address?: string
+  entrance_number?: number
+  floor?: number
+  flat_call?: number
 
 }

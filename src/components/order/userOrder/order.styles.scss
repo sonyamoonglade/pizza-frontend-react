@@ -30,3 +30,140 @@
 .user_order_back_icon{
   margin-left: 1rem;
 }
+
+.make_user_order_form{
+  padding: 1rem;
+  position: relative;
+}
+
+.form_top{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content:center;
+}
+
+.check{
+  position: relative;
+  width: 80vw;
+  height: 30vh;
+  max-height: 30vh;
+}
+.check_container{
+
+  position: relative;
+  width: 80vw;
+  p{
+    font-family: "Press Start 2P" !important;
+    font-size: 9px;
+
+    @media (max-width: 385px) {
+      font-size: 8px;
+    }
+  }
+}
+.other{
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: absolute;
+  z-index: 300;
+  bottom: calc(100% - (30vh - 20% + .5rem));
+  p{
+    font-size: 10px !important;
+  }
+}
+
+.overall_check_price{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+}
+
+.check_content{
+  width: 100%;
+  margin-top: 1.5rem;
+  position: absolute;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 180;
+  min-height: calc(30vh - 20% - 2.5rem);
+  max-height: calc((30vh - 20%) - 2.5rem);
+  padding-left: 1rem;
+  padding-right: .7rem;
+  border-bottom: 1px solid $black-18;
+  ul{
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.check_content::-webkit-scrollbar{
+  display: none;
+}
+
+
+
+.check_item{
+  list-style: none;
+  margin-bottom: 7px;
+  justify-content: space-between;
+  display: flex;
+
+}
+
+.check_title{
+  text-align: center;
+  font-family: "Geometria Bold";
+  font-size: $font-lg;
+  margin-bottom: 0.5rem;
+  height: 30px;
+}
+
+.badge_image{
+  width: 50px;
+  height: auto;
+  position: absolute;
+  z-index: 400;
+  right: 4%;
+  top: 8%;
+  transform: rotate(-0deg);
+}
+
+.order_form{
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.delivery_input{
+  width: 90%;
+
+
+}
+
+.is_delivered_checkbox{
+  justify-content: space-between;
+  display: flex;
+
+  p{
+    font-family: "Geometria Bold" !important;
+  }
+}
+
+.--disabled{
+  pointer-events: none;
+  color: $santa-grey;
+  opacity: 0.8;
+}
+
+.address_input{
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.address_input.--disabled{
+  opacity: 0.5;
+}
