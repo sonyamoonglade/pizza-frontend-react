@@ -52,7 +52,6 @@ const FormInput:FC<formInputProps> = (props) => {
            }
        }
        else if(!isValid && isFocused){
-           console.log('s')
            setInputTagClasses((p) => ["--invalid"].filter(e => e !== "--pristine"))
        }
        else if(!isValid && isValid !== null){
@@ -71,22 +70,23 @@ const FormInput:FC<formInputProps> = (props) => {
 
     return (
 
-            <div className={`${extraClassName || ""} input_container`}>
-                {isFocused &&
-                    <label>
-                        {onBlurValue}
-                    </label>
-                }
+            <div className={`${extraClassName || ""} form_input_container ${inputTagClasses.join(' ')}`}>
+
+                <label htmlFor={name} className='form_input_label'>
+                    {onBlurValue}
+                </label>
+
                 <input
                     ref={inputRef}
 
-                    onBlur={() => {
+                    onBlur={(e) => {
 
-                        if(v.trim().length === minLength || v.trim().length === 0){
-                            setV((state: any) => {
-                                return {...state, [name]:onBlurValue}
-                            })
+                        if(v.trim().length < minLength || v.trim().length === 0){
+
                             setIsFocused(false)
+                            setV((state: any) => {
+                                return {...state,[e.target.name]:""}
+                            })
                         }
                         return
                     }}
@@ -95,9 +95,7 @@ const FormInput:FC<formInputProps> = (props) => {
                             setIsFocused(true)
                             return
                         }
-                        setV((state: any) => {
-                            return {...state, [name]:onBlurValue}
-                        })
+
                         setIsFocused(true)
                     }}
                     id={name}
@@ -105,21 +103,20 @@ const FormInput:FC<formInputProps> = (props) => {
                     type={type}
                     maxLength={maxLength || 100}
                     name={name}
-                    value={isFocused ? v : placeholder}
+                    value={v}
                     onChange={(e) => {
                         const inputValue = e.target.value
                         if(fieldValidationFn !== undefined) {
                             const validationResult = fieldValidationFn(inputValue, minLength)
                             setIsValid(validationResult)
                         }
-
                         if(Regexp && inputValue.match(Regexp)) return
                         setV((state: any) =>{
                             return {...state, [e.target.name]: e.target.value}
                         })
 
                     }}
-                    className={`form_input ${inputTagClasses.join(' ')}`}
+                    className={`form_input`}
                 />
             </div>
 

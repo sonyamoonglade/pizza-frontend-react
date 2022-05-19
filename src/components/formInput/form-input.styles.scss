@@ -5,28 +5,45 @@
 .form_input{
   border: 0;
   outline: none;
-  padding-bottom: 0.15rem;
-  font-family: 'Geometria';
-
+  width: 100%;
+  padding-bottom: 0rem;
+  background-color: transparent;
+  font-family: 'Geometria',sans-serif;
   line-height: 25px;
   font-size: $font-md;
-  transition: border-color 0.5s ease-in-out ;
+  transform: translateY(2px)
 }
 
-//.input_container{
-//  display: flex;
-//  align-items: center;
-//  border-bottom: 1px solid $black-18;
-//
-//}
+.form_input_label{
+  margin-right: 0.1rem;
+  font-size: $font-md;
+  color: $santa-grey;
+  font-family: "Geometria",sans-serif;
+  transform: translateY(2px)
 
-.form_input.--disabled{
+}
+
+
+.form_input_container{
+  height: 35px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $black-18;
+  transition: border-color 0.5s ease-in-out ;
+
+  input::placeholder{
+    color: $santa-grey !important;
+
+  }
+}
+
+
+.form_input_container.--disabled{
   border-color: $black-18 !important;
 }
 
-.--pristine{
-  color: $black-50;
-}
+
 
 .--valid{
   border-color: $green-second !important;

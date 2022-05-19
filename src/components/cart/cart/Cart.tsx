@@ -33,10 +33,23 @@ const Cart = React.memo(() => {
                 <ul className="cart_list">
                     {!cartProducts.length ?
                         initialCart.map(p => (
-                        <CartItem product={p} />
+                        <>
+                            <CartItem product={p} />
+                            <CartItem product={p} />
+                            <CartItem product={p} />
+                            <CartItem product={p} />
+                            <CartItem product={p} />
+                        </>
+
                     )) :
                         cartProducts.map(p => (
-                            <CartItem product={p} />
+                            <>
+                                <CartItem product={p} />
+                                <CartItem product={p} />
+                                <CartItem product={p} />
+                                <CartItem product={p} />
+                                <CartItem product={p} />
+                            </>
                         ))
                     }
                 </ul>

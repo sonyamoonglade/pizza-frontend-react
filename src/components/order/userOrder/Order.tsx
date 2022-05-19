@@ -30,9 +30,9 @@ const Order = () => {
 
     const [formValues, setFormValues] = useState<createUserOrderFormFields>({
         address: "",
-        entrance_number: "0",
-        flat_call: "0",
-        floor: "0",
+        entrance_number: "",
+        flat_call: "",
+        floor: "",
         is_delivered: false,
         phone_number: ""
     })
@@ -82,17 +82,6 @@ const Order = () => {
                     </div>
                 </div>
                 <div className='order_form' >
-                    {/*<FormInput*/}
-                    {/*    name={'phone_number'}*/}
-                    {/*    type={'text'}*/}
-                    {/*    placeholder={'Номер телефона'}*/}
-                    {/*    v={formValues["phone_number"]}*/}
-                    {/*    setV={setFormValues}*/}
-                    {/*    onBlurValue={'+'}*/}
-                    {/*    maxLength={12}*/}
-                    {/*    fieldValidationFn={validatePhoneNumber}*/}
-                    {/*    Regexp={new RegExp("[A-Za-z]")}*/}
-                    {/*/>*/}
                     <div className="delivery_input">
                         <div className="is_delivered_checkbox">
                             <p className={isDeliveryFormDisabledExpr}>Нужна доставка?</p>
@@ -107,10 +96,10 @@ const Order = () => {
                         <FormInput
                             name={"address"}
                             type={"text"}
-                            placeholder={"ул. Пушкинская 29а"}
+                            placeholder={"Пушкинская 29а"}
                             v={formValues["address"]}
                             setV={setFormValues}
-                            onBlurValue={"ул. "}
+                            onBlurValue={"ул."}
                             minLength={3}
                             maxLength={100}
                             extraClassName={`${formValues["is_delivered"] ? "" : "--disabled" } address_input`}
@@ -123,12 +112,12 @@ const Order = () => {
                             <FormInput
                                 name={"entrance_number"}
                                 type={"text"}
-                                placeholder={"подъезд 1"}
+                                placeholder={"1"}
                                 v={formValues["entrance_number"]}
                                 setV={setFormValues}
-                                onBlurValue={"подъезд "}
-                                maxLength={11}
-                                minLength={7}
+                                onBlurValue={"подъезд"}
+                                maxLength={2}
+                                minLength={1}
                                 extraClassName={`${isDeliveryFormDisabledExpr}entrance_number_input`}
                                 Regexp={new RegExp("[A-Za-z]+|[-!,._\"`'#%&:;<>=@{}~\\$\\(\\)\\*\\+\\/\\\\\\?\\[\\]\\^\\|]+")}
                                 fieldValidationFn={minLengthValidation}
@@ -138,12 +127,12 @@ const Order = () => {
                             <FormInput
                                 name={"flat_call"}
                                 type={"text"}
-                                placeholder={"кв. 5"}
+                                placeholder={"5"}
                                 v={formValues["flat_call"]}
                                 setV={setFormValues}
-                                onBlurValue={"кв. "}
-                                maxLength={7}
-                                minLength={3}
+                                onBlurValue={"кв."}
+                                maxLength={3}
+                                minLength={1}
                                 extraClassName={`${isDeliveryFormDisabledExpr}flat_call_input`}
                                 Regexp={new RegExp("[A-Za-z]")}
                                 fieldValidationFn={minLengthValidation}
@@ -153,12 +142,12 @@ const Order = () => {
                             <FormInput
                                 name={"floor"}
                                 type={"text"}
-                                placeholder={"этаж 9"}
+                                placeholder={"9"}
                                 v={formValues["floor"]}
                                 setV={setFormValues}
                                 onBlurValue={"этаж "}
-                                maxLength={7}
-                                minLength={5}
+                                maxLength={2}
+                                minLength={1}
                                 extraClassName={`${isDeliveryFormDisabledExpr}floor_input`}
                                 Regexp={new RegExp("[A-Za-z]+|[-!,._\"`'#%&:;<>=@{}~\\$\\(\\)\\*\\+\\/\\\\\\?\\[\\]\\^\\|]+")}
                                 fieldValidationFn={minLengthValidation}
@@ -166,6 +155,25 @@ const Order = () => {
 
                         </div>
 
+                    </div>
+                    <div className="contacts_input">
+                        <div className='contacts_title'>
+                            <p className='contacts_phone_title'>Номер телефона</p>
+                            <small><i>*После оформления заказа мы позвоним вам для подтверждения</i></small>
+                        </div>
+                        <FormInput
+                            name={'phone_number'}
+                            type={'text'}
+                            placeholder={'9524000770'}
+                            v={formValues["phone_number"]}
+                            setV={setFormValues}
+                            onBlurValue={'+7'}
+                            maxLength={10}
+                            fieldValidationFn={validatePhoneNumber}
+                            Regexp={new RegExp("[A-Za-z]+|[-!,._\"`'#%&:;<>=@{}~\\$\\(\\)\\*\\+\\/\\\\\\?\\[\\]\\^\\|]+")}
+                            extraClassName={"phone_number_input"}
+                            minLength={10}
+                        />
                     </div>
                 </div>
 
