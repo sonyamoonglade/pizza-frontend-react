@@ -15,7 +15,7 @@ import {currency} from "../../../common/constans";
 const Order = () => {
 
     const dispatch = useAppDispatch()
-    const {validatePhoneNumber} = useFormValidations()
+    const {validatePhoneNumber, minLengthValidation} = useFormValidations()
     const {userOrder} = useAppSelector(windowSelector)
 
     function toggleOrder(){
@@ -30,13 +30,15 @@ const Order = () => {
 
     const [formValues, setFormValues] = useState<createUserOrderFormFields>({
         address: "",
-        entrance_number: 0,
-        flat_call: 0,
-        floor: 0,
+        entrance_number: "0",
+        flat_call: "0",
+        floor: "0",
         is_delivered: false,
         phone_number: ""
     })
 
+
+    const isDeliveryFormDisabledExpr = formValues["is_delivered"] ? "" : "--disabled "
 
     return (
         <div className={userOrder ? 'make_user_order modal modal--visible' : 'make_user_order modal'}>
@@ -62,7 +64,6 @@ const Order = () => {
                                     <p className='check_item_title'>Гавайская пицца</p>
                                     <p className='check_item_summary'>152.00 * 1 = 152.0</p>
                                 </li>
-
                                 <li className='check_item'>
                                     <p className='check_item_title'>Вода без газа </p>
                                     <p className='check_item_summary'>79.00 * 3 = 212.0</p>
@@ -94,25 +95,76 @@ const Order = () => {
                     {/*/>*/}
                     <div className="delivery_input">
                         <div className="is_delivered_checkbox">
-                            <p className={formValues["is_delivered"] ? "" : "--disabled"}>Нужна доставка?</p>
+                            <p className={isDeliveryFormDisabledExpr}>Нужна доставка?</p>
                             <input name={"is_delivered"} onChange={(e) => {
                                 setFormValues((state) => {
                                     const prev = state.is_delivered
                                     return {...state,is_delivered:!prev}
-                                })
-                            }} type="checkbox"/>
+                                 })
+                                }} type="checkbox"
+                            />
                         </div>
-
                         <FormInput
                             name={"address"}
                             type={"text"}
-                            placeholder={"улица Пушкинская 29а"}
+                            placeholder={"ул. Пушкинская 29а"}
                             v={formValues["address"]}
                             setV={setFormValues}
-                            onBlurValue={""}
+                            onBlurValue={"ул. "}
+                            minLength={3}
                             maxLength={100}
                             extraClassName={`${formValues["is_delivered"] ? "" : "--disabled" } address_input`}
+                            Regexp={new RegExp("[_!\"`'#%&:;<>=@{}~\\$\\(\\)\\*\\+\\/\\\\\\?\\[\\]\\^\\|]+")}
+                            fieldValidationFn={minLengthValidation}
+
                         />
+                        <div className="delivery_details_container">
+
+                            <FormInput
+                                name={"entrance_number"}
+                                type={"text"}
+                                placeholder={"подъезд 1"}
+                                v={formValues["entrance_number"]}
+                                setV={setFormValues}
+                                onBlurValue={"подъезд "}
+                                maxLength={11}
+                                minLength={7}
+                                extraClassName={`${isDeliveryFormDisabledExpr}entrance_number_input`}
+                                Regexp={new RegExp("[A-Za-z]+|[-!,._\"`'#%&:;<>=@{}~\\$\\(\\)\\*\\+\\/\\\\\\?\\[\\]\\^\\|]+")}
+                                fieldValidationFn={minLengthValidation}
+
+                            />
+
+                            <FormInput
+                                name={"flat_call"}
+                                type={"text"}
+                                placeholder={"кв. 5"}
+                                v={formValues["flat_call"]}
+                                setV={setFormValues}
+                                onBlurValue={"кв. "}
+                                maxLength={7}
+                                minLength={3}
+                                extraClassName={`${isDeliveryFormDisabledExpr}flat_call_input`}
+                                Regexp={new RegExp("[A-Za-z]")}
+                                fieldValidationFn={minLengthValidation}
+
+                            />
+
+                            <FormInput
+                                name={"floor"}
+                                type={"text"}
+                                placeholder={"этаж 9"}
+                                v={formValues["floor"]}
+                                setV={setFormValues}
+                                onBlurValue={"этаж "}
+                                maxLength={7}
+                                minLength={5}
+                                extraClassName={`${isDeliveryFormDisabledExpr}floor_input`}
+                                Regexp={new RegExp("[A-Za-z]+|[-!,._\"`'#%&:;<>=@{}~\\$\\(\\)\\*\\+\\/\\\\\\?\\[\\]\\^\\|]+")}
+                                fieldValidationFn={minLengthValidation}
+                            />
+
+                        </div>
 
                     </div>
                 </div>

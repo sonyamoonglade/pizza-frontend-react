@@ -54,23 +54,24 @@
   position: relative;
   width: 80vw;
   p{
-    font-family: "Press Start 2P" !important;
-    font-size: 9px;
+    font-family: "Geometria" !important;
+    font-size: 16px;
 
     @media (max-width: 385px) {
-      font-size: 8px;
+      font-size: 15px;
     }
   }
 }
 .other{
   width: 100%;
   padding-left: 1rem;
-  padding-right: 1rem;
+  padding-right: 0.7rem;
   position: absolute;
   z-index: 300;
   bottom: calc(100% - (30vh - 20% + .5rem));
   p{
-    font-size: 10px !important;
+    font-size: 17px !important;
+    font-family: "Geometria Medium" !important;
   }
 }
 
@@ -84,7 +85,7 @@
 
 .check_content{
   width: 100%;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   position: absolute;
   overflow-x: hidden;
   overflow-y: auto;
@@ -108,14 +109,15 @@
 
 .check_item{
   list-style: none;
-  margin-bottom: 7px;
+  margin-bottom: 9px;
   justify-content: space-between;
   display: flex;
 
 }
 
 .check_title{
-  text-align: center;
+  text-align: left;
+  margin-left: 1.5rem;
   font-family: "Geometria Bold";
   font-size: $font-lg;
   margin-bottom: 0.5rem;
@@ -150,13 +152,18 @@
 
   p{
     font-family: "Geometria Bold" !important;
+
+  }
+  p.--disabled{
+    opacity: 0.8 !important;
   }
 }
 
 .--disabled{
   pointer-events: none;
   color: $santa-grey;
-  opacity: 0.8;
+
+  opacity: 0.5;
 }
 
 .address_input{
@@ -164,6 +171,23 @@
   margin-top: 1rem;
 }
 
-.address_input.--disabled{
-  opacity: 0.5;
+.delivery_details_container{
+  display: flex;
+  margin-top: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  overflow-x: hidden;
 }
+
+.entrance_number_input{
+  width: 35%;
+
+}
+.flat_call_input{
+  width: 22%;
+}
+
+.floor_input{
+  width: 22%;
+}
+// TODO: DROPSHADOW DLYA TRIANGLE!

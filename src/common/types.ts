@@ -85,8 +85,8 @@ export interface createUserOrderFormFields {
   phone_number: string
   is_delivered: boolean
   address?: string
-  entrance_number?: number
-  floor?: number
-  flat_call?: number
+  entrance_number?: string
+  floor?: string
+  flat_call?: string
 
 }

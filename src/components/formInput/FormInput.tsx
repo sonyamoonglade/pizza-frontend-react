@@ -14,6 +14,7 @@ interface formInputProps {
     maxLength?: number
     extraClassName?: string
     Regexp?: RegExp
+    minLength: number
 }
 
 const FormInput:FC<formInputProps> = (props) => {
@@ -23,7 +24,7 @@ const FormInput:FC<formInputProps> = (props) => {
     const [isFocused, setIsFocused] = useState<boolean>(false)
     const [inputTagClasses,setInputTagClasses] = useState<string[]>([])
 
-    const validationAnimationRef = useRef<HTMLInputElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const {
         type,
@@ -35,7 +36,8 @@ const FormInput:FC<formInputProps> = (props) => {
         onBlurValue,
         maxLength,
         extraClassName,
-        Regexp
+        Regexp,
+        minLength
     } = props
 
 
@@ -62,54 +64,64 @@ const FormInput:FC<formInputProps> = (props) => {
        else {
            setInputTagClasses((p) => ["--valid"])
        }
-
        return
     },[isValid,isFocused])
+
+
+
     return (
 
-            <input
-                ref={validationAnimationRef}
-                onBlur={() => {
+            <div className={`${extraClassName || ""} input_container`}>
+                {isFocused &&
+                    <label>
+                        {onBlurValue}
+                    </label>
+                }
+                <input
+                    ref={inputRef}
 
-                    if(v.trim().length === 1 || v.trim().length === 0){
+                    onBlur={() => {
+
+                        if(v.trim().length === minLength || v.trim().length === 0){
+                            setV((state: any) => {
+                                return {...state, [name]:onBlurValue}
+                            })
+                            setIsFocused(false)
+                        }
+                        return
+                    }}
+                    onFocus={() => {
+                        if(v.trim().length > minLength) {
+                            setIsFocused(true)
+                            return
+                        }
                         setV((state: any) => {
                             return {...state, [name]:onBlurValue}
                         })
-                        setIsFocused(false)
-                    }
-                    return
-                }}
-                onFocus={() => {
-                    if(v.trim().length > 1) {
                         setIsFocused(true)
-                        return
-                    }
-                    setV((state: any) => {
-                        return {...state, [name]:onBlurValue}
-                    })
-                    setIsFocused(true)
-                }}
-                id={name}
-                placeholder={placeholder}
-                type={type}
-                maxLength={maxLength || 100}
-                name={name}
-                value={isFocused ? v : placeholder}
-                onChange={(e) => {
-                    const inputValue = e.target.value
-                    if(fieldValidationFn !== undefined) {
-                        const validationResult = fieldValidationFn(inputValue)
-                        setIsValid(validationResult)
-                    }
+                    }}
+                    id={name}
+                    placeholder={placeholder}
+                    type={type}
+                    maxLength={maxLength || 100}
+                    name={name}
+                    value={isFocused ? v : placeholder}
+                    onChange={(e) => {
+                        const inputValue = e.target.value
+                        if(fieldValidationFn !== undefined) {
+                            const validationResult = fieldValidationFn(inputValue, minLength)
+                            setIsValid(validationResult)
+                        }
 
-                    // if(Regexp && inputValue.match(Regexp)) return
-                    setV((state: any) =>{
-                        return {...state, [e.target.name]: e.target.value}
-                    })
+                        if(Regexp && inputValue.match(Regexp)) return
+                        setV((state: any) =>{
+                            return {...state, [e.target.name]: e.target.value}
+                        })
 
-                }}
-                className={`form_input ${extraClassName || ""} ${inputTagClasses.join(' ')}`}
-            />
+                    }}
+                    className={`form_input ${inputTagClasses.join(' ')}`}
+                />
+            </div>
 
     );
 };

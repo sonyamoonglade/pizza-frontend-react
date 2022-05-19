@@ -13,6 +13,13 @@ export function useFormValidations (){
 
             return true
 
+        },
+
+        minLengthValidation: (input: string, minLength: number) => {
+            if(input.trim().length > minLength){
+                return true
+            }
+            return false
         }
 
     }
