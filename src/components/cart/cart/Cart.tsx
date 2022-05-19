@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {TiArrowBack} from 'react-icons/ti'
 import './cart.styles.scss'
 import {useAppDispatch, useAppSelector, windowActions, windowSelector} from "../../../redux";
@@ -33,23 +33,10 @@ const Cart = React.memo(() => {
                 <ul className="cart_list">
                     {!cartProducts.length ?
                         initialCart.map(p => (
-                        <>
                             <CartItem product={p} />
-                            <CartItem product={p} />
-                            <CartItem product={p} />
-                            <CartItem product={p} />
-                            <CartItem product={p} />
-                        </>
-
                     )) :
                         cartProducts.map(p => (
-                            <>
                                 <CartItem product={p} />
-                                <CartItem product={p} />
-                                <CartItem product={p} />
-                                <CartItem product={p} />
-                                <CartItem product={p} />
-                            </>
                         ))
                     }
                 </ul>

@@ -21,8 +21,8 @@ const OrderLink = () => {
             {transform:'translateX(100%)'},
             {transform:'translateX(0)'}
         ],{
-            duration: 350,
-            easing: 'ease-in-out',
+            duration: 400,
+            easing: 'ease',
             delay: 0
 
         })

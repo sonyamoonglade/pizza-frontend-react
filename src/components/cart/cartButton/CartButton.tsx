@@ -68,6 +68,7 @@ const CartButton:FC<cartButtonProps>= ({quantity,cart}) => {
     function incrementProductQuantity(){
         const {id,price,translate} = presentedProduct
         const p:DatabaseCartProduct = {
+            category: presentedProduct.category,
             id,
             price,
             translate,

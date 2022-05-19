@@ -70,8 +70,12 @@ button{
   position: fixed;
   background-color: white;
   right: -100%;
-
   overflow: hidden;
+}
+.--disabled{
+  pointer-events: none;
+  color: $santa-grey;
+  opacity: 0.7;
 }
 
 @font-face {

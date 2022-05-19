@@ -92,6 +92,7 @@ const ProductPresentation = () => {
     function addToCart(product:Product){
         if(isProductInCart) return
         const cartProduct:DatabaseCartProduct = {
+            category: product.category,
             id: product.id,
             quantity: 1,
             translate: product.translate,

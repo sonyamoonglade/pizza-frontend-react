@@ -37,8 +37,15 @@ export type LocalStorageCartProduct = {
   price: number
 }
 
+export enum ProductCategories {
+  pizza = 'Пицца',
+  drinks = 'Напитки',
+
+}
+
 export type DatabaseCartProduct = {
   id: number
+  category: string
   quantity: number
   translate: string
   price: number
@@ -80,13 +87,31 @@ export interface CartInterface {
 
 }
 
-export interface createUserOrderFormFields {
+export interface UserOrderFormFields {
 
-  phone_number: string
-  is_delivered: boolean
-  address?: string
-  entrance_number?: string
-  floor?: string
-  flat_call?: string
+  phone_number: {
+    value: string
+    isValid: boolean
+  }
+  is_delivered: {
+    value: boolean
+    isValid: boolean
+  }
+  address?: {
+    value: string
+    isValid: boolean
+  }
+  entrance_number?: {
+    value: string
+    isValid: boolean
+  }
+  floor?: {
+    value: string
+    isValid: boolean
+  }
+  flat_call?: {
+    value: string
+    isValid: boolean
+  }
 
 }

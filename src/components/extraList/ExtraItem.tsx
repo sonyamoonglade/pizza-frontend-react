@@ -25,6 +25,7 @@ const ExtraItem:FC<extraItemProps> = ({product,updateCart}) => {
     function addItemToCart(){
         const {price,id,translate,} = product
         const p:DatabaseCartProduct = {
+            category:product.category,
             quantity:1,
             translate,
             price,

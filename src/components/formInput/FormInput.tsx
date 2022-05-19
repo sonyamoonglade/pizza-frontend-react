@@ -43,18 +43,10 @@ const FormInput:FC<formInputProps> = (props) => {
 
 
     useEffect(() => {
-
-       if(!isFocused){
-           const alreadyHas = inputTagClasses.some(e => e === "--pristine")
-
-           if(!alreadyHas){
-               setInputTagClasses((p) => p.concat("--pristine"))
-           }
+        if(!isValid){
+           setInputTagClasses((p) => ["--invalid"])
        }
-       else if(!isValid && isFocused){
-           setInputTagClasses((p) => ["--invalid"].filter(e => e !== "--pristine"))
-       }
-       else if(!isValid && isValid !== null){
+       else if(!isValid){
            const alreadyHas = (inputTagClasses.some(e => e === "--invalid"))
            if(!alreadyHas){
                setInputTagClasses((p) => p.concat("--invalid").filter(p => p !== "--valid"))
@@ -85,7 +77,13 @@ const FormInput:FC<formInputProps> = (props) => {
 
                             setIsFocused(false)
                             setV((state: any) => {
-                                return {...state,[e.target.name]:""}
+                                const obj:{value:string,isValid: boolean} = {
+                                    value: state[e.target.name].value,
+                                    isValid: state[e.target.name].isValid
+                                }
+
+                                obj.value = ""
+                                return {...state, [e.target.name]: obj}
                             })
                         }
                         return
@@ -106,13 +104,21 @@ const FormInput:FC<formInputProps> = (props) => {
                     value={v}
                     onChange={(e) => {
                         const inputValue = e.target.value
-                        if(fieldValidationFn !== undefined) {
-                            const validationResult = fieldValidationFn(inputValue, minLength)
-                            setIsValid(validationResult)
-                        }
                         if(Regexp && inputValue.match(Regexp)) return
+
                         setV((state: any) =>{
-                            return {...state, [e.target.name]: e.target.value}
+                            let validationResult = false
+                            if(fieldValidationFn !== undefined){
+                                validationResult = fieldValidationFn(inputValue, minLength)
+                                setIsValid(validationResult)
+                            }
+
+                            const obj = {
+                                value: e.target.value,
+                                isValid: validationResult
+                            }
+
+                            return {...state, [e.target.name]: obj}
                         })
 
                     }}
