@@ -17,6 +17,13 @@ export interface DeliveryDetails {
   flat_call?: number
 }
 
+export type CreateUserOrder =  {
+
+  cart: DatabaseCartProduct[];
+  is_delivered: boolean;
+  delivery_details?: DeliveryDetails
+}
+
 export interface Features {
   weight: number
   energy_value?: number

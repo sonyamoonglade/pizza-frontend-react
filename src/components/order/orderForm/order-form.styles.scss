@@ -8,6 +8,9 @@
 
 .delivery_input{
   margin-bottom: 1.5rem;
+  @media (min-height: 700px) {
+    font-size: $font-mder;
+  }
 }
 
 .is_delivered_checkbox{
@@ -29,6 +32,10 @@
 .contacts_title{
   i{
     font-family: "Geometria",sans-serif;
+    @media (min-height: 700px) {
+      font-size: $font-smer;
+
+    }
   }
   margin-bottom: 0.2rem;
 }
@@ -36,6 +43,9 @@
 .contacts_phone_title{
   margin-bottom: 0.1rem;
   font-family: "Geometria Bold", serif !important;
+  @media (min-height: 700px) {
+    font-size: $font-mder;
+  }
 
 }
 

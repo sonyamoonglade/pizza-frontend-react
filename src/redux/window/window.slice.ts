@@ -6,12 +6,14 @@ interface WindowState {
     menu: boolean
     cart: boolean
     userOrder: boolean
+    loading: boolean
 }
 
 const initialState:WindowState = {
     menu: false,
     cart: false,
-    userOrder: false
+    userOrder: false,
+    loading: false
 }
 
 
@@ -37,6 +39,10 @@ export const windowSlice = createSlice({
             s.cart = false
             s.menu = false
             s.userOrder = false
+        },
+
+        toggleLoading: (s,a:PayloadAction<boolean>) => {
+            s.loading = a.payload || !s.loading
         }
 
     }

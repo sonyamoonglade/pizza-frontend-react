@@ -11,10 +11,11 @@ const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive}) => {
 
     const bounceAnimationRef = useRef<HTMLParagraphElement>(null)
     const slideAnimationRef = useRef<HTMLButtonElement>()
+    const dispatch = useAppDispatch()
+
     useEffect(() => {
         startSlideAnimation()
     },[])
-
     useEffect(() => {
         let i: any;
         if(isActive) {
@@ -41,7 +42,6 @@ const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive}) => {
 
         })
     }
-
     function startBounceAnimation(){
        return bounceAnimationRef.current.animate([
             {transform:'translateY(0)'},
@@ -55,12 +55,24 @@ const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive}) => {
         })
     }
 
-    const dispatch = useAppDispatch()
+
+    function turnLoader(){
+        const t = setTimeout(() => {
+            dispatch(windowActions.toggleLoading(true))
+        },200)
+    }
 
     return (
         <button
+
             ref={slideAnimationRef}
             className={isActive? 'submit_order_button --active' : 'submit_order_button '}
+            onClick={() => {
+                if(!isActive) {
+                    return
+                }
+                turnLoader()
+            }}
         >
             <p ref={bounceAnimationRef}>Оформить заказ!</p>
         </button>

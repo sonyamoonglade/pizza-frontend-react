@@ -13,6 +13,7 @@ import Navigation from "../navigation/mobile/Navigation";
 import OpenCloseButton from "../openCloseButton/OpenCloseButton";
 import Cart from "../../cart/cart/Cart";
 import Order from "../../order/userOrder/Order";
+import Loading from "../../loading/Loading";
 
 
 const mockPromotions:Promotion[] = [
@@ -66,6 +67,7 @@ const Header:FC = () => {
             <PromotionList promotions={mockPromotions} />
             <Order />
             <Cart />
+            <Loading duration={6000} />
             <Navigation />
 
         </header>

@@ -11,6 +11,8 @@ import Check from "../check/Check";
 import {useCart} from "../../../hooks/useCart";
 import SubmitOrderButton from "../submitOrderButton/SubmitOrderButton";
 import formInput from "../../formInput/FormInput";
+import {useAxios} from "../../../hooks/useAxios";
+import {useCreateOrder} from "../../../hooks/useCreateOrder";
 
 
 
@@ -59,6 +61,8 @@ const Order = () => {
             isValid: false
         }
     })
+    const {client} = useAxios()
+    const {createUserOrder} = useCreateOrder(client)
 
     const isActive = useMemo(() => {
 
@@ -70,6 +74,18 @@ const Order = () => {
         return formValidity
 
     },[formValues])
+
+    function getFormValues(){
+
+        try {
+
+
+            // const order = await createUserOrder()
+        }catch (e) {
+
+        }
+
+    }
 
     return (
         <div className={userOrder ? 'make_user_order modal modal--visible' : 'make_user_order modal'}>

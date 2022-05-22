@@ -16,7 +16,6 @@ const OrderForm:FC<orderFormProps> = ({formValues,setFormValues}) => {
     const {validatePhoneNumber, minLengthValidation} = useFormValidations()
 
 
-    console.log(formValues["phone_number"].value)
     return (
         <div className='order_form' >
             <div className="delivery_input">
