@@ -11,5 +11,10 @@ export * from './product/product.slice'
 export * from './product/product.async-actions'
 export * from './product/product.selectors'
 
+export * from'./order/order.slice'
+export * from'./order/order.async-actions'
+export * from'./order/order.selecotrs'
+
+
 export * from './store'
 

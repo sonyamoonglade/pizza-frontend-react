@@ -21,7 +21,9 @@ const OrderForm:FC<orderFormProps> = ({formValues,setFormValues}) => {
             <div className="delivery_input">
                 <div className="is_delivered_checkbox">
                     <p className={isDeliveryFormDisabledExpr}>Нужна доставка?</p>
-                    <input name={"is_delivered"} onChange={() => {
+                    <input
+                        checked={formValues.is_delivered.value}
+                        name={"is_delivered"} onChange={() => {
                         setFormValues((state:UserOrderFormFields) => {
                             const obj = state.is_delivered
                             obj.value = !obj.value
@@ -110,6 +112,7 @@ const OrderForm:FC<orderFormProps> = ({formValues,setFormValues}) => {
                     Regexp={new RegExp("[A-Za-z]+|[-!,._\"`'#%&:;<>=@{}~\\$\\(\\)\\*\\+\\/\\\\\\?\\[\\]\\^\\|]+")}
                     extraClassName={"phone_number_input"}
                     minLength={10}
+
                 />
             </div>
         </div>

@@ -67,7 +67,7 @@ const Header:FC = () => {
             <PromotionList promotions={mockPromotions} />
             <Order />
             <Cart />
-            <Loading duration={6000} />
+            <Loading duration={4000} />
             <Navigation />
 
         </header>

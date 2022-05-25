@@ -40,7 +40,7 @@ const ProductPresentation = () => {
         if(presentedProduct) return `${baseUrl}/${presentedProduct.id}.jpg`
         return ""
     },[presentedProduct])
-    const filling = useMemo(() => {
+    const isEmptyCart = useMemo(() => {
         const c = cart.getCart()
         const onCondition = !(c.length > 0)
         return onCondition
@@ -68,14 +68,15 @@ const ProductPresentation = () => {
     },[isPresentingNow,totalCartPrice])
     useEffect(() => {
         if(startingQuantity < presentedProductCartQuantity){
+            console.log(startingQuantity,presentedProductCartQuantity)
             setIsNotified(true)
         }else {
             setIsNotified(false)
         }
     },[presentedProductCartQuantity,totalCartPrice])
     useEffect(() => {
-        dispatch(productActions.setCartFilling(filling))
-    },[filling])
+        dispatch(productActions.setCartEmpty(isEmptyCart))
+    },[isEmptyCart])
 
     function splitLongName(){
         const {name} = presentedProduct

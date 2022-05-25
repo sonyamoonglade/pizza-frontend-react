@@ -42,7 +42,7 @@ const AddToCartOnPresentation:FC<addToCartOnPresentationProps> = (props) => {
             easing: 'ease-in-out'
         })
     },[presentedProductCartQuantity])
-
+    console.log(isNotified)
     return (
         <div onClick={() => addToCart(presentedProduct)} className='add_to_cart_btn'>
             <div className='cart_icon_container' ref={jumpAnimationRef}>

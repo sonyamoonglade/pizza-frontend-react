@@ -1,36 +1,24 @@
 import {CreateUserOrder, DatabaseCartProduct, UserOrderFormFields} from "../common/types";
 import {AxiosInstance} from "axios";
+import {FormValuesInterface} from "../components/order/userOrder/Order";
+import {useState} from "react";
 
-const baseOrderUrl = 'http://localhost:5000/api/order'
+const baseOrderUrl = 'http://localhost:5000/api/v1/order'
 export function useCreateOrder (axios: AxiosInstance){
 
-    async function createUserOrder(formValues: CreateUserOrder, cart: DatabaseCartProduct[]){
-
-        let body: CreateUserOrder
 
 
-        if(formValues.is_delivered){
-            body = {
-                cart,
-                is_delivered: formValues.is_delivered,
-                delivery_details: {
-                    address: formValues.delivery_details.address,
-                    flat_call: Number(formValues.delivery_details.flat_call),
-                    entrance_number: Number(formValues.delivery_details.entrance_number),
-                    floor: Number(formValues.delivery_details.floor)
-                }
-            }
-        }else{
+    async function createUserOrder(formValues: FormValuesInterface, cart: DatabaseCartProduct[]){
 
-            body = {
-                is_delivered: formValues.is_delivered,
-                cart
-            }
+        let body = {
+            ...formValues,
+            cart
         }
 
         const response = await axios.post(`${baseOrderUrl}/createUserOrder`, body)
+        return {order: response.data}
 
-        return response.data
+
 
     }
 

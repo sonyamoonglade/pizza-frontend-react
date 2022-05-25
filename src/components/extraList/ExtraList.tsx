@@ -13,7 +13,7 @@ const ExtraList:FC<extraListProps> = ({updateCart}) => {
     return (
         <div className='cart_extra_list'>
             {productList.map((p) => (
-                <ExtraItem updateCart={updateCart} product={p}/>
+                <ExtraItem key={p.id} updateCart={updateCart} product={p}/>
             )) }
         </div>
     );

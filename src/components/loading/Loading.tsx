@@ -3,8 +3,8 @@ import {useAppDispatch, useAppSelector, windowActions, windowSelector} from "../
 import './loading.styles.scss'
 import {SpinnerCircular} from 'spinners-react'
 import {FaCheckCircle} from 'react-icons/fa'
-import {useCreateOrder} from "../../hooks/useCreateOrder";
-import {useAxios} from "../../hooks/useAxios";
+import {AiFillCloseCircle} from 'react-icons/ai'
+import {useDotsAnimation} from "./hooks/useDotsAnimation";
 
 interface loadingProps {
    duration: number
@@ -19,14 +19,17 @@ enum loadingSteps {
 
 const Loading:FC<loadingProps> = ({duration}) => {
 
-    const {loading} = useAppSelector(windowSelector)
+    const {loading, error} = useAppSelector(windowSelector)
     const dispatch = useAppDispatch()
-    const [dots,setDots] = useState(".")
-    const [loadingStep, setLoadingStep] = useState<loadingSteps>(loadingSteps.starting)
-
-
-
-    const [stopDots, setStopDots] = useState(false)
+    const {
+        stepsAnimation,
+        dotsAnimation,
+        stopDotsAnimation,
+        setDefaults,
+        loadingStep,
+        dots,
+        stopDots
+    } = useDotsAnimation()
 
     useEffect(() => {
         if(loading){
@@ -50,66 +53,56 @@ const Loading:FC<loadingProps> = ({duration}) => {
 
     },[loading, loadingStep])
     useEffect(() => {
-        let i: any;
-        if(loading && !stopDots){
-            i = setInterval(() => {
-                dotsAnimation()
-            },500)
-        }
+        if(loading){
+            let i: any;
+            if(loading && !stopDots){
+                i = setInterval(() => {
+                    dotsAnimation()
+                },500)
+            }
 
-        return () => clearInterval(i)
+            return () => clearInterval(i)
+        }
 
     },[loading,dots,stopDots])
     useEffect(() => {
-        setDefaults()
-        return () => {
-            setTimeout(() => {
-                setDefaults()
-            },1000)
+        if(loading){
+            setDefaults()
+            return () => {
+                setTimeout(() => {
+                    setDefaults()
+                },1000)
+            }
         }
     },[loading])
+    useEffect(() => {
+        if(error) {
+            const t = stopByError()
+            return () => clearTimeout(t)
+        }
 
-    function stopDotsAnimation(){
-        setLoadingStep(loadingSteps.afterFinish)
-        setDots("")
-        setStopDots(true)
-    }
-    async function finishLoadingAndCloseAllModals(){
+    },[error])
+
+    function finishLoadingAndCloseAllModals(){
         dispatch(windowActions.toggleLoading(false))
         dispatch(windowActions.closeAll())
+        dispatch(windowActions.loadingSuccess())
+    }
+    function stopByError(){
 
+        stopDotsAnimation()
+        setDefaults()
+        dispatch(windowActions.toggleLoading(false))
+        const t = setTimeout(() => {
+            dispatch(windowActions.stopErrorScreen())
+        },3500)
 
-
+        return t
 
     }
-    function dotsAnimation(){
-        if(dots.length < 3){
-            setDots(p => {
-                const v =  p + "."
-                return  v
-            })
-        }else {
-            setDots(".")
-        }
-    }
-    function stepsAnimation(){
-        if(loadingStep === loadingSteps.starting){
-            setLoadingStep(loadingSteps.middle)
-        }
-        else if(loadingStep === loadingSteps.middle){
-            setLoadingStep(loadingSteps.finish)
-        }
-    }
-    function setDefaults(){
-        setDots(".")
-        setLoadingStep(loadingSteps.starting)
-        setStopDots(false)
-    }
-
-    
 
     return (
-        <div className={loading ? 'modal loading modal--visible' : 'modal loading'}>
+        <div className={(loading && !error) ? 'modal loading modal--visible' : 'modal loading'}>
             <div className="loading_content">
                 {loadingStep !== loadingSteps.afterFinish && loading ?
                     <SpinnerCircular size={150} secondaryColor={"#ffc535"} color={"#3cb46e"} enabled={loading}/> :
@@ -117,6 +110,13 @@ const Loading:FC<loadingProps> = ({duration}) => {
                 }
                 <p>{loadingStep}{dots}</p>
             </div>
+            {error && <div className='modal loading modal--visible'>
+                <div className="loading_content">
+                    <AiFillCloseCircle  size={60} color={"#eb5757"} />
+                    <p>Возникла ошибка! <br/> Повторите попытку еще раз.</p>
+                </div>
+            </div>}
+
         </div>
     );
 };

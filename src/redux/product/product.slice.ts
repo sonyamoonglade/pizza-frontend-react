@@ -46,6 +46,7 @@ export const productSlice = createSlice({
         },
         stopPresentation:(s) => {
             s.isPresentingNow = false
+            s.presentedProductCartQuantity = 0
         },
         setPresentedProductQuantity: (s, a:PayloadAction<number>) => {
             s.presentedProductCartQuantity = a.payload
@@ -53,7 +54,7 @@ export const productSlice = createSlice({
         setTotalCartPrice: (s,a:PayloadAction<number>) => {
             s.totalCartPrice = a.payload
         },
-        setCartFilling: (s,a:PayloadAction<boolean>) => {
+        setCartEmpty: (s,a:PayloadAction<boolean>) => {
             s.isCartEmpty = a.payload
         },
 

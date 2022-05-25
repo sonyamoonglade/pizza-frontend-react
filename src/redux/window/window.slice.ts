@@ -7,13 +7,17 @@ interface WindowState {
     cart: boolean
     userOrder: boolean
     loading: boolean
+    loadingSuccess: boolean | null
+    error: boolean
 }
 
 const initialState:WindowState = {
     menu: false,
     cart: false,
     userOrder: false,
-    loading: false
+    loading: false,
+    loadingSuccess: false,
+    error: false
 }
 
 
@@ -42,8 +46,24 @@ export const windowSlice = createSlice({
         },
 
         toggleLoading: (s,a:PayloadAction<boolean>) => {
-            s.loading = a.payload || !s.loading
-        }
+            s.loading = a.payload
+        },
+
+        loadingSuccess: (s) => {
+          s.loadingSuccess = true
+        },
+
+        startErrorScreen: (s) => {
+            s.loading = false
+            s.loadingSuccess = false
+            s.error = true
+        },
+        stopErrorScreen: (s) => {
+            s.loadingSuccess = null
+            s.error = false
+        },
+
+
 
     }
 

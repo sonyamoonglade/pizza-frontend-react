@@ -2,6 +2,7 @@ import React, {FC, HTMLInputTypeAttribute, useEffect, useRef, useState} from 're
 
 import './form-input.styles.scss'
 import {log} from "util";
+import {useAppSelector, windowSelector} from "../../redux";
 
 interface formInputProps {
     name: string
@@ -20,11 +21,12 @@ interface formInputProps {
 const FormInput:FC<formInputProps> = (props) => {
 
 
-    const [isValid, setIsValid] = useState<boolean>(null)
-    const [isFocused, setIsFocused] = useState<boolean>(false)
+    const [isValid, setIsValid] = useState<boolean>(false)
     const [inputTagClasses,setInputTagClasses] = useState<string[]>([])
-
+    const {loadingSuccess,error} = useAppSelector(windowSelector)
     const inputRef = useRef<HTMLInputElement>(null)
+
+
 
     const {
         type,
@@ -44,20 +46,25 @@ const FormInput:FC<formInputProps> = (props) => {
 
     useEffect(() => {
         if(!isValid){
-           setInputTagClasses((p) => ["--invalid"])
+           return setInputTagClasses((p) => ["--invalid"])
        }
-       else if(!isValid){
-           const alreadyHas = (inputTagClasses.some(e => e === "--invalid"))
-           if(!alreadyHas){
-               setInputTagClasses((p) => p.concat("--invalid").filter(p => p !== "--valid"))
-           }
-       }
+
        else {
            setInputTagClasses((p) => ["--valid"])
        }
-       return
-    },[isValid,isFocused])
 
+    },[isValid])
+
+    useEffect(() => {
+        if(loadingSuccess){
+            setIsValid(false)
+        }
+        if (error){
+            if(name === "phone_number"){
+                setIsValid(false)
+            }
+        }
+    },[loadingSuccess,error])
 
 
     return (
@@ -75,7 +82,6 @@ const FormInput:FC<formInputProps> = (props) => {
 
                         if(v.trim().length < minLength || v.trim().length === 0){
 
-                            setIsFocused(false)
                             setV((state: any) => {
                                 const obj:{value:string,isValid: boolean} = {
                                     value: state[e.target.name].value,
@@ -87,14 +93,6 @@ const FormInput:FC<formInputProps> = (props) => {
                             })
                         }
                         return
-                    }}
-                    onFocus={() => {
-                        if(v.trim().length > minLength) {
-                            setIsFocused(true)
-                            return
-                        }
-
-                        setIsFocused(true)
                     }}
                     id={name}
                     placeholder={placeholder}

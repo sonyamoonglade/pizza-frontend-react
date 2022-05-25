@@ -62,7 +62,7 @@ export function useCart(){
     }
 
     const clearCart = () => {
-        updateCart([])
+        localStorage.removeItem(CART_KEY)
     }
 
     const calculateCartTotalPrice = () => {

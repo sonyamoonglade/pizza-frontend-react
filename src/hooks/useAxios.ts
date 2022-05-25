@@ -15,7 +15,8 @@ export function useAxios (){
         if(statusCode === 401) {
             dispatch(userActions.logout())
         } // unauthorized
-        Promise.reject(error)
+        return Promise.reject(error)
+
     }
     function responseSuccessHandler(s: any){
         return s
@@ -23,6 +24,7 @@ export function useAxios (){
 
     const client = axios.create({
         baseURL:"http://localhost:5000/api/v1",
+        withCredentials: true
     })
     client.interceptors.response.use(
        success => responseSuccessHandler(success),

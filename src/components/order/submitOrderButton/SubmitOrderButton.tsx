@@ -5,9 +5,10 @@ import {useAppDispatch, windowActions} from "../../../redux";
 
 interface submitOrderButtonProps {
     isActive: boolean
+    handler: Function
 }
 
-const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive}) => {
+const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive,handler}) => {
 
     const bounceAnimationRef = useRef<HTMLParagraphElement>(null)
     const slideAnimationRef = useRef<HTMLButtonElement>()
@@ -57,9 +58,9 @@ const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive}) => {
 
 
     function turnLoader(){
-        const t = setTimeout(() => {
-            dispatch(windowActions.toggleLoading(true))
-        },200)
+
+        dispatch(windowActions.toggleLoading(true))
+
     }
 
     return (
@@ -71,6 +72,7 @@ const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive}) => {
                 if(!isActive) {
                     return
                 }
+                handler()
                 turnLoader()
             }}
         >
@@ -79,4 +81,4 @@ const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive}) => {
     );
 };
 
-export default SubmitOrderButton;
+export default React.memo(SubmitOrderButton);

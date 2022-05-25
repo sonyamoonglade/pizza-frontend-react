@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BiShoppingBag} from "react-icons/bi";
 
 import './cart-link.styles.scss'
@@ -8,12 +8,16 @@ import {currency} from "../../../common/constans";
 
 const CartLink = () => {
 
-    const {totalCartPrice} = useAppSelector(productSelector)
+    const {totalCartPrice,isCartEmpty} = useAppSelector(productSelector)
     const dispatch = useAppDispatch()
 
     function toggleCart (){
         dispatch(windowActions.toggleCart())
     }
+
+    useEffect(() => {
+        if(isCartEmpty) dispatch(windowActions.toggleCart())
+    },[isCartEmpty])
 
     return (
         <button onClick={() => toggleCart() } className='cart_link'>

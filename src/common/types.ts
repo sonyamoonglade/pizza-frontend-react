@@ -82,7 +82,15 @@ export enum CategoryColor {
   'Закуски' = '#3cb46e'
 }
 
-
+export type UserOrderInterface = {
+  id: number
+  cart: DatabaseCartProduct[]
+  created_at: Date
+  status: OrderStatus
+  is_delivered: boolean
+  delivery_details: DeliveryDetails
+  total_cart_price: number
+}
 export interface CartInterface {
 
   addProduct(product: DatabaseCartProduct): void
@@ -93,7 +101,6 @@ export interface CartInterface {
   calculateCartTotalPrice(): number
 
 }
-
 export interface UserOrderFormFields {
 
   phone_number: {
@@ -102,7 +109,6 @@ export interface UserOrderFormFields {
   }
   is_delivered: {
     value: boolean
-    isValid: boolean
   }
   address?: {
     value: string

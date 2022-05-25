@@ -15,6 +15,7 @@ import CartLink from "./components/cart/cartLink/CartLink";
 import OrderLink from "./components/order/orderLink/OrderLink";
 import ProductPresentation from "./components/product/productPresentation/ProductPresentation";
 import Catalog from "./components/catalog/Catalog";
+import {useAuthentication} from "./hooks/useAuthentication";
 
 
 
@@ -32,7 +33,6 @@ function App() {
   },[])
   useEffect(() => {
     const body = document.querySelector('body')
-    console.log(cart)
     if(menu || cart){
       body.style.overflow = 'hidden'
     }
