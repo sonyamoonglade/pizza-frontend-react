@@ -16,7 +16,9 @@ import OrderLink from "./components/order/orderLink/OrderLink";
 import ProductPresentation from "./components/product/productPresentation/ProductPresentation";
 import Catalog from "./components/catalog/Catalog";
 import {useAuthentication} from "./hooks/useAuthentication";
+import OrderHistory from "./components/orders/OrderHistory";
 
+export const baseBackendUrl = "https://pizza-fullstack.herokuapp.com"
 
 
 function App() {
@@ -26,21 +28,21 @@ function App() {
 
   const dispatch = useAppDispatch()
   const {productList,isCartEmpty} = useAppSelector(productSelector)
-  const {menu,cart} = useAppSelector(windowSelector)
+  const {navigation,cart} = useAppSelector(windowSelector)
 
   useEffect(() => {
     dispatch(getCatalogProducts(client))
   },[])
   useEffect(() => {
     const body = document.querySelector('body')
-    if(menu || cart){
+    if(navigation || cart){
       body.style.overflow = 'hidden'
     }
     else {
       body.style.overflow = 'visible'
     }
 
-  },[menu,cart])
+  },[navigation,cart])
 
 
   return (

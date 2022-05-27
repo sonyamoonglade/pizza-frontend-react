@@ -3,6 +3,7 @@ export * from './window/window.slice'
 export * from './window/window.selectors'
 
 export * from './user/user.slice'
+export * from './user/user.selector'
 
 export * from './hooks/AppDispatch'
 export * from './hooks/AppSelector'

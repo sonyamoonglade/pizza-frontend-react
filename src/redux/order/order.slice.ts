@@ -1,18 +1,20 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import Order from "../../components/order/userOrder/Order";
-import {UserOrderInterface} from "../../common/types";
+import {ResponseUserOrder} from "../../common/types";
 
 
 
 
 interface InitialOrderStateInterface {
-    orderHistory: UserOrderInterface[]
+    orderHistory: ResponseUserOrder[]
+    hasMore: boolean
 
 }
 
 
 const initialState: InitialOrderStateInterface = {
-    orderHistory: []
+    orderHistory: [],
+    hasMore: true
 }
 
 
@@ -21,14 +23,15 @@ export const orderSlice = createSlice({
     initialState,
     reducers: {
         //todo: add infinite scroll from async action.. smth like that
-        addOne: (s,a:PayloadAction<UserOrderInterface>) => {
+        addOne: (s,a:PayloadAction<ResponseUserOrder>) => {
             const o = a.payload
             s.orderHistory = s.orderHistory.concat(o)
         },
 
-        addMany: (s, a:PayloadAction<UserOrderInterface[]>) => {
-            const orders = a.payload
+        addManyAndSetHasMore: (s, a:PayloadAction<{orders: ResponseUserOrder[], hasMore: boolean}>) => {
+            const {orders,hasMore} = a.payload
             s.orderHistory = s.orderHistory.concat(...orders)
+            s.hasMore = hasMore
         }
     }
 })

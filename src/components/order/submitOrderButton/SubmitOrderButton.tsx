@@ -31,7 +31,6 @@ const SubmitOrderButton:FC<submitOrderButtonProps> = ({isActive,handler}) => {
             clearInterval(i)
         }
     },[isActive])
-
     function startSlideAnimation (){
         slideAnimationRef.current.animate([
             {transform:'translateX(100%)'},

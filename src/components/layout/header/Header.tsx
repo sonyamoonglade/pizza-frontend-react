@@ -51,18 +51,18 @@ const Header:FC = () => {
 
     }
 
-    const {menu} = useAppSelector(windowSelector)
+    const {navigation} = useAppSelector(windowSelector)
     const dispatch = useAppDispatch()
 
     function toggleMenu(){
-        dispatch(windowActions.toggleMenu())
+        dispatch(windowActions.toggleNavigation())
     }
 
     return (
         <header>
             <div className='header_top'>
                 <p onClick={nullifyScroll}>Пицца-Тупицца</p>
-                <OpenCloseButton modalState={menu} toggleModalFn={toggleMenu} />
+                <OpenCloseButton modalState={navigation} toggleModalFn={toggleMenu} />
             </div>
             <PromotionList promotions={mockPromotions} />
             <Order />

@@ -20,6 +20,7 @@ import SubmitOrderButton from "../submitOrderButton/SubmitOrderButton";
 import {useAxios} from "../../../hooks/useAxios";
 import {useCreateOrder} from "../../../hooks/useCreateOrder";
 import {useAuthentication} from "../../../hooks/useAuthentication";
+import {useUserOrderForm} from "../hooks/useUserOrderForm";
 
 export interface FormValuesInterface {
     is_delivered: boolean
@@ -30,88 +31,29 @@ export interface FormValuesInterface {
 
 
 const Order = () => {
-    const formDefaults = {
-        address: {
-            value:"",
-            isValid: false
-        },
-        entrance_number: {
-            value:"",
-            isValid: false
-        },
-        flat_call: {
-            value:"",
-            isValid: false
-        },
-        floor: {
-            value:"",
-            isValid: false
-        },
-        is_delivered: {
-            value: false,
-            isValid: true
-        },
-        phone_number: {
-            value:"",
-            isValid: false
-        }
-    }
     const cart = useCart()
-    const dispatch = useAppDispatch()
     const {client} = useAxios()
     const {createUserOrder} = useCreateOrder(client)
     const {login} = useAuthentication(client)
     const {userOrder} = useAppSelector(windowSelector)
-    const [formValues, setFormValues] = useState<UserOrderFormFields>(formDefaults)
-    const isActive = useMemo(() => {
+    const dispatch = useAppDispatch()
 
-        const values = Object.values(formValues)
-        const withAddressAndAllValid = values.every(v => v.isValid)
-        const withoutAddressAndRestValid = formValues.phone_number.isValid && !formValues.is_delivered.value
-        const formValidity =  withAddressAndAllValid || withoutAddressAndRestValid
+    const {
+        formValues,
+        isSubmitButtonActive,
+        setFormValues,
+        setFormDefaults,
+        getFormValues
+    } = useUserOrderForm()
 
-        return formValidity
 
-    },[formValues])
     function toggleOrder(){
         dispatch(windowActions.toggleUserOrder())
     }
     function closeAllModals(){
         dispatch(windowActions.closeAll())
     }
-    function getFormValues():FormValuesInterface{
-        const adjacencyValues = new Map()
-        for(const [k,v] of Object.entries(formValues)){
-            adjacencyValues.set(k,v.value)
-        }
-        let delivery_details:DeliveryDetails = null;
-        let finalValues: any;
-        if(adjacencyValues.get("is_delivered")){
-            delivery_details = {
-                address: adjacencyValues.get("address"),
-                entrance_number: Number(adjacencyValues.get("entrance_number")),
-                flat_call: Number(adjacencyValues.get("flat_call")),
-                floor: Number(adjacencyValues.get("floor")),
-            }
-            finalValues = {
-                is_delivered: adjacencyValues.get("is_delivered"),
-                delivery_details,
-                phone_number: `+7${adjacencyValues.get("phone_number")}`,
-            }
 
-        }else {
-            finalValues = {
-                is_delivered: adjacencyValues.get("is_delivered"),
-                phone_number: `+7${adjacencyValues.get("phone_number")}`,
-            }
-        }
-
-        return finalValues
-    }
-    function setFormDefaults(){
-        setFormValues(formDefaults)
-
-    }
 
     async function handleOrderCreation(){
 
@@ -127,7 +69,6 @@ const Order = () => {
 
         try {
             const {order} = await createUserOrder(formValues, usrCart)
-            console.log(order)
             cart.clearCart()
             setFormDefaults()
             dispatch(productActions.setCartEmpty(true))
@@ -149,9 +90,6 @@ const Order = () => {
         }
 }
 
-    console.log(formValues)
-    // todo: use hooks for animations
-    //todo: hook useForm
 
     return (
         <div className={userOrder ? 'make_user_order modal modal--visible' : 'make_user_order modal'}>
@@ -173,7 +111,7 @@ const Order = () => {
                     setFormValues={setFormValues}
                 />
 
-                {userOrder && <SubmitOrderButton handler={ handleOrderCreation}  isActive={isActive} />}
+                {userOrder && <SubmitOrderButton handler={ handleOrderCreation}  isActive={isSubmitButtonActive} />}
 
             </div>
         </div>

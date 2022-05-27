@@ -1,14 +1,14 @@
 import {CreateUserOrder, DatabaseCartProduct, UserOrderFormFields} from "../common/types";
 import {AxiosInstance} from "axios";
 import {FormValuesInterface} from "../components/order/userOrder/Order";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 
 const baseOrderUrl = 'http://localhost:5000/api/v1/order'
 export function useCreateOrder (axios: AxiosInstance){
 
 
 
-    async function createUserOrder(formValues: FormValuesInterface, cart: DatabaseCartProduct[]){
+    const createUserOrder = useCallback(async function (formValues: FormValuesInterface, cart: DatabaseCartProduct[]){
 
         let body = {
             ...formValues,
@@ -20,7 +20,7 @@ export function useCreateOrder (axios: AxiosInstance){
 
 
 
-    }
+    },[])
 
     return {createUserOrder}
 

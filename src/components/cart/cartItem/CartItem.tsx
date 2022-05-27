@@ -10,7 +10,7 @@ interface cartItemProps {
 
 const CartItem:FC<cartItemProps> = ({product}) => {
 
-    const baseUrl = 'http://localhost:5000/images'
+    const baseUrl = `http://localhost:5000/images`
 
     const productImage = useMemo(() => {
         return `${baseUrl}/${product.id}.jpg`
