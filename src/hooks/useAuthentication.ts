@@ -1,10 +1,9 @@
-import {useCallback, useState} from "react";
+import {useCallback} from "react";
 import {AxiosInstance} from "axios";
 import {useAppDispatch, userActions} from "../redux";
 
-const baseAuthUrl = "http://localhost:5000/api/v1/users"
 
-export function useAuthentication (axios:AxiosInstance) {
+export function useAuthentication (client:AxiosInstance) {
     
     const dispatch = useAppDispatch()
 
@@ -12,7 +11,7 @@ export function useAuthentication (axios:AxiosInstance) {
         const body = {
             phone_number
         }
-        await axios.post(`${baseAuthUrl}/login`, body)
+        await client.post(`/users/login`, body)
         dispatch(userActions.login())
         
     },[])
