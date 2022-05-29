@@ -15,8 +15,6 @@ import CartLink from "./components/cart/cartLink/CartLink";
 import OrderLink from "./components/order/orderLink/OrderLink";
 import ProductPresentation from "./components/product/productPresentation/ProductPresentation";
 import Catalog from "./components/catalog/Catalog";
-import {useAuthentication} from "./hooks/useAuthentication";
-import OrderHistory from "./components/orders/OrderHistory";
 
 export const baseBackendUrl = "https://pizza-fullstack.herokuapp.com"
 
