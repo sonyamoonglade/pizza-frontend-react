@@ -31,14 +31,11 @@ const Cart = React.memo(() => {
                 </div>
 
                 <ul className="cart_list">
-                    {!cartProducts.length ?
-                        initialCart.map(p => (
-                            <CartItem key={p.id} product={p} />
-                    )) :
+                    {cartProducts &&
                         cartProducts.map(p => (
-                                <CartItem key={p.id} product={p} />
-                        ))
-                    }
+                            <CartItem key={p.id} product={p}/>
+                        ))}
+
                 </ul>
                 <div className="cart_extra">
                     <div className="cart_extra_header">
