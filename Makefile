@@ -2,6 +2,9 @@ build:
 	docker build -t zharpizza-front .
 create:
 	heroku create zharpizza-front --buildpack https://github.com/mars/create-react-app-buildpack.git && heroku git:remote -a zharpizza-front && git add . && git commit -m "deploy-commit" && git push heroku master
+changes:
+	git add . && git commit -m "small changes on logic" && git push heroku master && git push
+
 push-h-git:
 	git push heroku master
 push-h:

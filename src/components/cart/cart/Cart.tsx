@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TiArrowBack} from 'react-icons/ti'
 import './cart.styles.scss'
-import {useAppDispatch, useAppSelector, windowActions, windowSelector} from "../../../redux";
+import {productSelector, useAppDispatch, useAppSelector, windowActions, windowSelector} from "../../../redux";
 import {useCart} from "../../../hooks/useCart";
 import {DatabaseCartProduct} from "../../../common/types";
 import CartItem from "../cartItem/CartItem";
@@ -12,15 +12,28 @@ const Cart = React.memo(() => {
 
 
         const {cart: cartModel} = useAppSelector(windowSelector)
+        const {isCartEmpty, totalCartPrice} = useAppSelector(productSelector)
 
         const dispatch = useAppDispatch()
         const cart = useCart()
-        const initialCart = cart.getCart()
         const [cartProducts,setCartProducts] = useState<DatabaseCartProduct[]>(cart.getCart())
 
         function toggleCart() {
             dispatch(windowActions.toggleCart())
         }
+
+        useEffect(() => {
+            if(isCartEmpty){
+                console.log('here')
+                setCartProducts([])
+            }
+        },[isCartEmpty])
+
+        useEffect(() => {
+            setCartProducts(cart.getCart())
+        },[totalCartPrice])
+
+
 
         return (
             <div className={cartModel ? 'cart modal modal--visible' : 'cart modal'}>

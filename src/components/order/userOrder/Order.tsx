@@ -74,8 +74,10 @@ const Order = () => {
             dispatch(productActions.setCartEmpty(true))
             dispatch(orderActions.addOne(order))
             setFormValues((p) => {
-                p.phone_number.isValid = false
-                return p
+                const s = {...p}
+                s.phone_number.value = ""
+                s.phone_number.isValid = false
+                return s
             })
         }catch (e) {
             console.log(e)
@@ -88,11 +90,12 @@ const Order = () => {
             })
             return dispatch(windowActions.startErrorScreen())
         }
-}
-
+    }
 
     return (
-        <div className={userOrder ? 'make_user_order modal modal--visible' : 'make_user_order modal'}>
+        <div
+
+            className={userOrder ? 'make_user_order modal modal--visible' : 'make_user_order modal'}>
             <div className="user_order_header">
                 <TiArrowBack onClick={() => toggleOrder()} className='user_order_back_icon' size={30} />
                 <p className='user_order_title'>Оформление заказа</p>
