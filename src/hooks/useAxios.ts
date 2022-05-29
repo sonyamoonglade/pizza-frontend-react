@@ -23,7 +23,7 @@ export function useAxios (){
     }
 
     const client = axios.create({
-        baseURL:"https://alexandrovich-nest.herokuapp.com/api/v1",
+        baseURL:"https://zharpizza-backend.herokuapp.com/api/v1",
         withCredentials: true
     })
     client.interceptors.response.use(
