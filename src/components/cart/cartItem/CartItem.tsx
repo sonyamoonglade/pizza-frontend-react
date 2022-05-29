@@ -3,6 +3,7 @@ import React, {FC, useMemo} from 'react';
 import './cart-item.styles.scss'
 import {DatabaseCartProduct} from "../../../common/types";
 import {currency} from "../../../common/constans";
+import {baseUrl} from "../../product/productPresentation/ProductPresentation";
 
 interface cartItemProps {
     product: DatabaseCartProduct
@@ -10,7 +11,6 @@ interface cartItemProps {
 
 const CartItem:FC<cartItemProps> = ({product}) => {
 
-    const baseUrl = `http://localhost:5000/images`
 
     const productImage = useMemo(() => {
         return `${baseUrl}/${product.id}.jpg`

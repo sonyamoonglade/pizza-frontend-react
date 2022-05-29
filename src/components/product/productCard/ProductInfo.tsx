@@ -3,6 +3,7 @@ import {Product} from "../../../common/types";
 import {AiOutlinePlus} from "react-icons/ai";
 import NutrientList from "../../nutrient/NutrientList";
 import {productSlice, useAppDispatch} from "../../../redux";
+import {baseUrl} from "../productPresentation/ProductPresentation";
 
 interface productInfoProps {
     product: Product
@@ -21,7 +22,6 @@ const ProductInfo:FC<productInfoProps> = ({product}) => {
     function startPresentationFn(product: Product){
         dispatch(productActions.startPresentation(product))
     }
-    const baseUrl = 'http://localhost:5000/images/'
 
     return (
         <div className='product_info'>

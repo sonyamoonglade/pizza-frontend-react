@@ -9,7 +9,7 @@ import '../../layout/layout/layout.styles.scss'
 import AddToCartOnPresentation from "../../cart/addToCartButton/AddToCartOnPresentation";
 
 const currency = '₽'
-export const baseUrl = `http://localhost:5000/images`
+export const baseUrl = `https://storage.yandexcloud.net/zharpizza/static/images`
 
 const ProductPresentation = () => {
     // todo: fix notification

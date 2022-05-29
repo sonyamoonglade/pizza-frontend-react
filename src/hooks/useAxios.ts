@@ -23,7 +23,7 @@ export function useAxios (){
     }
 
     const client = axios.create({
-        baseURL:"http://localhost:5000/api/v1",
+        baseURL:"https://alexandrovich-nest.herokuapp.com/api/v1",
         withCredentials: true
     })
     client.interceptors.response.use(
